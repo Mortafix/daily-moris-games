@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Guess the daily angle in Angly, a quick browser puzzle with four attempts.">
+    <meta name="theme-color" content="#0f1117">
+    <meta name="color-scheme" content="dark">
+    <meta name="application-name" content="Daily Games">
+    <meta name="apple-mobile-web-app-title" content="Angly">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Angly">
+    <meta property="og:description" content="Guess the daily angle in four attempts.">
+    <meta property="og:image" content="assets/icon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Angly">
+    <meta name="twitter:description" content="Guess the daily angle in four attempts.">
+    <meta name="twitter:image" content="assets/icon.png">
+    <title>Angly</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-panel" aria-labelledby="app-title">
+        <nav class="site-nav" aria-label="Games">
+          <a class="nav-link" href="index.html">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
+          <a class="nav-link is-active" href="angly.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-drafting-compass"></i>
+            </span>
+            <span data-i18n="navAngly">Angly</span>
+          </a>
+          <a class="nav-link" href="colory.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/colory-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-palette"></i>
+            </span>
+            <span data-i18n="navColory">Colory</span>
+          </a>
+        </nav>
+
+        <header class="topbar">
+          <div class="title-block">
+            <h1 class="game-title" id="app-title">
+              <span class="title-icon-wrap" aria-hidden="true">
+                <img class="title-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-drafting-compass"></i>
+              </span>
+              <span data-i18n="title">Angly</span>
+            </h1>
+          </div>
+
+          <div class="top-actions">
+            <div class="date-pill" id="dateLabel" data-i18n-aria="dailyDateLabel" aria-label="Daily date"></div>
+            <button class="icon-button" id="statsButton" type="button" data-i18n-aria="openStats" aria-label="Open statistics">
+              <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
+            </button>
+            <div class="language-switch" role="group" data-i18n-aria="languageLabel" aria-label="Language">
+              <button class="language-button" type="button" data-lang="it" data-i18n-aria="italianLanguage" aria-label="Italiano">🇮🇹</button>
+              <button class="language-button" type="button" data-lang="en" data-i18n-aria="englishLanguage" aria-label="English">🇬🇧</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="mode-switch" role="tablist" data-i18n-aria="difficultyLabel" aria-label="Difficulty">
+          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-mode="easy">
+            <i class="fa-solid fa-temperature-half" aria-hidden="true"></i>
+            <span data-i18n="easy">Easy</span>
+          </button>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="hard">
+            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+            <span data-i18n="hard">Hard</span>
+          </button>
+        </div>
+
+        <div class="angle-stage" id="angleStage" aria-live="off">
+          <svg id="angleSvg" class="angle-svg" viewBox="0 0 360 360" role="img" aria-labelledby="angleTitle angleDesc">
+            <title id="angleTitle">Daily angle</title>
+            <desc id="angleDesc">An angle to guess</desc>
+            <circle class="guide-ring" cx="180" cy="180" r="132"></circle>
+            <path id="angleSector" class="angle-sector" d=""></path>
+            <path id="angleArc" class="angle-arc" d=""></path>
+            <line id="baseRay" class="base-ray" x1="180" y1="180" x2="312" y2="180"></line>
+            <line id="targetRay" class="target-ray" x1="180" y1="180" x2="312" y2="180"></line>
+            <circle class="origin-dot" cx="180" cy="180" r="7"></circle>
+          </svg>
+        </div>
+
+        <div class="status-strip" id="statusStrip">
+          <div class="status-copy">
+            <i id="statusIcon" class="fa-solid fa-bullseye" aria-hidden="true"></i>
+            <p id="statusText" class="status-text" data-i18n="ready">Make your first guess.</p>
+          </div>
+          <div class="attempt-dots" id="attemptDots" data-i18n-aria="attemptsLabel" aria-label="Attempts"></div>
+        </div>
+
+        <form class="guess-form" id="guessForm" novalidate>
+          <label class="guess-label" for="guessInput" data-i18n="guessLabel">Degrees</label>
+          <div class="input-row">
+            <input id="guessInput" class="guess-input" name="guess" type="tel" inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" autocomplete="off" min="0" max="360" placeholder="0-360">
+            <button class="guess-button" type="submit">
+              <i class="fa-solid fa-crosshairs" aria-hidden="true"></i>
+              <span data-i18n="guessButton">Guess</span>
+            </button>
+          </div>
+          <p id="formMessage" class="form-message" aria-live="polite">
+            <i id="formMessageIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <span id="formMessageText"></span>
+          </p>
+        </form>
+
+        <ol class="guess-list" id="guessList" data-i18n-aria="previousGuesses" aria-label="Previous guesses"></ol>
+      </section>
+    </main>
+
+    <dialog class="stats-dialog" id="statsDialog" aria-labelledby="statsTitle">
+      <div class="stats-panel">
+        <header class="stats-header">
+          <div>
+            <p class="eyebrow" data-i18n="statsEyebrow">Local stats</p>
+            <h2 id="statsTitle" data-i18n="statsTitle">Statistics</h2>
+          </div>
+          <button class="icon-button" id="statsCloseButton" type="button" data-i18n-aria="closeStats" aria-label="Close statistics">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </header>
+
+        <div class="stats-grid">
+          <div class="stat-tile">
+            <i class="fa-solid fa-gamepad" aria-hidden="true"></i>
+            <span id="statsPlayed" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsPlayed">Played</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+            <span id="statsWins" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsWins">Wins</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-percent" aria-hidden="true"></i>
+            <span id="statsWinRate" class="stat-value">0%</span>
+            <span class="stat-label" data-i18n="statsWinRate">Win rate</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-fire" aria-hidden="true"></i>
+            <span id="statsCurrentStreak" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsCurrentStreak">Streak</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-medal" aria-hidden="true"></i>
+            <span id="statsBestStreak" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsBestStreak">Best</span>
+          </div>
+        </div>
+
+        <section class="distribution-section" aria-labelledby="distributionTitle">
+          <h3 id="distributionTitle" data-i18n="distributionTitle">Guess distribution</h3>
+          <div id="statsDistribution" class="distribution-list"></div>
+          <p id="statsEmpty" class="stats-empty" data-i18n="statsEmpty">Finish a daily puzzle to start tracking stats.</p>
+        </section>
+      </div>
+    </dialog>
+
+    <script src="angly.js"></script>
+  </body>
+</html>

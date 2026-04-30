@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Small daily browser puzzles: guess angles with Angly and match RGB colors with Colory.">
+    <meta name="theme-color" content="#0f1117">
+    <meta name="color-scheme" content="dark">
+    <meta name="application-name" content="Daily Games">
+    <meta name="apple-mobile-web-app-title" content="Daily Games">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Daily Games">
+    <meta property="og:description" content="Small daily browser puzzles: Angly and Colory.">
+    <meta property="og:image" content="assets/icon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Daily Games">
+    <meta name="twitter:description" content="Small daily browser puzzles: Angly and Colory.">
+    <meta name="twitter:image" content="assets/icon.png">
+    <title>Daily Games</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell home-shell">
+      <section class="game-panel home-panel" aria-labelledby="home-title">
+        <nav class="site-nav" aria-label="Games">
+          <a class="nav-link is-active" href="index.html">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
+          <a class="nav-link" href="angly.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-drafting-compass"></i>
+            </span>
+            <span data-i18n="navAngly">Angly</span>
+          </a>
+          <a class="nav-link" href="colory.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/colory-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-palette"></i>
+            </span>
+            <span data-i18n="navColory">Colory</span>
+          </a>
+        </nav>
+
+        <header class="home-hero">
+          <div class="title-block">
+            <h1 id="home-title" data-i18n="homeTitle">Daily Games</h1>
+            <p class="home-subtitle" data-i18n="homeSubtitle">Small daily puzzles for quick guesses.</p>
+          </div>
+
+          <div class="top-actions">
+            <div class="date-pill" id="dateLabel" data-i18n-aria="dailyDateLabel" aria-label="Daily date"></div>
+            <div class="language-switch" role="group" data-i18n-aria="languageLabel" aria-label="Language">
+              <button class="language-button" type="button" data-lang="it" data-i18n-aria="italianLanguage" aria-label="Italiano">🇮🇹</button>
+              <button class="language-button" type="button" data-lang="en" data-i18n-aria="englishLanguage" aria-label="English">🇬🇧</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="game-card-grid">
+          <article class="game-card is-angly">
+            <div class="game-card-art" aria-hidden="true">
+              <img class="game-card-png" src="assets/angly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+              <i class="fa-solid fa-drafting-compass"></i>
+            </div>
+            <div class="game-card-copy">
+              <h2 data-i18n="anglyTitle">Angly</h2>
+              <p data-i18n="anglyDescription">Guess the daily angle in a few attempts.</p>
+              <span class="game-status" id="anglyStatus"></span>
+            </div>
+            <a class="play-link" href="angly.html">
+              <span data-i18n="playAngly">Play Angly</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="game-card is-colory">
+            <div class="game-card-art" aria-hidden="true">
+              <img class="game-card-png" src="assets/colory-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+              <i class="fa-solid fa-palette"></i>
+            </div>
+            <div class="game-card-copy">
+              <h2 data-i18n="coloryTitle">Colory</h2>
+              <p data-i18n="coloryDescription">Match the daily color with RGB sliders.</p>
+              <span class="game-status" id="coloryStatus"></span>
+            </div>
+            <a class="play-link" href="colory.html">
+              <span data-i18n="playColory">Play Colory</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="home.js"></script>
+  </body>
+</html>
