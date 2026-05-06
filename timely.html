@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Order five historical events from today in history in Timely, a quick browser puzzle.">
+    <meta name="theme-color" content="#0f1117">
+    <meta name="color-scheme" content="dark">
+    <meta name="application-name" content="Daily Games">
+    <meta name="apple-mobile-web-app-title" content="Timely">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Timely">
+    <meta property="og:description" content="Order five events from today in history.">
+    <meta property="og:image" content="assets/icon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Timely">
+    <meta name="twitter:description" content="Order five events from today in history.">
+    <meta name="twitter:image" content="assets/icon.png">
+    <title>Timely</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-panel timely-panel" aria-labelledby="app-title">
+        <nav class="site-nav" aria-label="Games">
+          <a class="nav-link" href="index.html">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
+          <a class="nav-link" href="angly.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-drafting-compass"></i>
+            </span>
+            <span data-i18n="navAngly">Angly</span>
+          </a>
+          <a class="nav-link" href="colory.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/colory-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-palette"></i>
+            </span>
+            <span data-i18n="navColory">Colory</span>
+          </a>
+          <a class="nav-link is-active" href="timely.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/timely-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-timeline"></i>
+            </span>
+            <span data-i18n="navTimely">Timely</span>
+          </a>
+        </nav>
+
+        <header class="topbar">
+          <div class="title-block">
+            <h1 class="game-title" id="app-title">
+              <span class="title-icon-wrap" aria-hidden="true">
+                <img class="title-game-icon" src="assets/timely-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-timeline"></i>
+              </span>
+              <span data-i18n="title">Timely</span>
+            </h1>
+          </div>
+
+          <div class="top-actions">
+            <div class="date-pill" id="dateLabel" data-i18n-aria="dailyDateLabel" aria-label="Daily date"></div>
+            <button class="icon-button" id="statsButton" type="button" data-i18n-aria="openStats" aria-label="Open statistics">
+              <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
+            </button>
+            <div class="language-switch" role="group" data-i18n-aria="languageLabel" aria-label="Language">
+              <button class="language-button" type="button" data-lang="it" data-i18n-aria="italianLanguage" aria-label="Italiano">🇮🇹</button>
+              <button class="language-button" type="button" data-lang="en" data-i18n-aria="englishLanguage" aria-label="English">🇬🇧</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="mode-switch" role="tablist" data-i18n-aria="difficultyLabel" aria-label="Difficulty">
+          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-mode="easy">
+            <i class="fa-solid fa-temperature-half" aria-hidden="true"></i>
+            <span data-i18n="easy">Easy</span>
+          </button>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="hard">
+            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+            <span data-i18n="hard">Hard</span>
+          </button>
+        </div>
+
+        <details class="mode-legend">
+          <summary>
+            <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+            <span data-i18n="modeLegendTitle">Modes</span>
+          </summary>
+          <div class="mode-legend-copy">
+            <p><strong data-i18n="easy">Easy</strong>: <span data-i18n="easyLegend">shows which positions are correct.</span></p>
+            <p><strong data-i18n="hard">Hard</strong>: <span data-i18n="hardLegend">gives no hints between attempts.</span></p>
+          </div>
+        </details>
+
+        <div class="timely-stage" id="timelyStage" aria-live="off">
+          <div class="timely-loading" id="timelyLoading">
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span data-i18n="loading">Loading today's events</span>
+          </div>
+          <ol class="timely-list" id="timelyList" data-i18n-aria="timelyListLabel" aria-label="Timely events"></ol>
+        </div>
+
+        <div class="status-strip" id="statusStrip">
+          <div class="status-copy">
+            <i id="statusIcon" class="fa-solid fa-timeline" aria-hidden="true"></i>
+            <p id="statusText" class="status-text" data-i18n="ready">Order events from oldest to newest.</p>
+          </div>
+          <div class="attempt-dots" id="attemptDots" data-i18n-aria="attemptsLabel" aria-label="Attempts"></div>
+        </div>
+
+        <div class="timely-attempt-history" id="attemptHistory" data-i18n-aria="attemptHistoryLabel" aria-label="Attempt history"></div>
+
+        <form class="timely-form" id="timelyForm" novalidate>
+          <button class="guess-button timely-submit" type="submit">
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+            <span data-i18n="submitOrder">Submit order</span>
+          </button>
+          <p id="formMessage" class="form-message" aria-live="polite">
+            <i id="formMessageIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <span id="formMessageText"></span>
+          </p>
+        </form>
+
+      </section>
+    </main>
+
+    <dialog class="stats-dialog" id="statsDialog" aria-labelledby="statsTitle">
+      <div class="stats-panel">
+        <header class="stats-header">
+          <div>
+            <p class="eyebrow" data-i18n="statsEyebrow">Local stats</p>
+            <h2 id="statsTitle" data-i18n="statsTitle">Statistics</h2>
+          </div>
+          <button class="icon-button" id="statsCloseButton" type="button" data-i18n-aria="closeStats" aria-label="Close statistics">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </header>
+
+        <div class="stats-grid">
+          <div class="stat-tile">
+            <i class="fa-solid fa-gamepad" aria-hidden="true"></i>
+            <span id="statsPlayed" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsPlayed">Played</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+            <span id="statsWins" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsWins">Wins</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-percent" aria-hidden="true"></i>
+            <span id="statsWinRate" class="stat-value">0%</span>
+            <span class="stat-label" data-i18n="statsWinRate">Win rate</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-fire" aria-hidden="true"></i>
+            <span id="statsCurrentStreak" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsCurrentStreak">Streak</span>
+          </div>
+          <div class="stat-tile">
+            <i class="fa-solid fa-medal" aria-hidden="true"></i>
+            <span id="statsBestStreak" class="stat-value">0</span>
+            <span class="stat-label" data-i18n="statsBestStreak">Best</span>
+          </div>
+        </div>
+
+        <section class="distribution-section" aria-labelledby="distributionTitle">
+          <h3 id="distributionTitle" data-i18n="distributionTitle">Attempts</h3>
+          <div id="statsDistribution" class="distribution-list"></div>
+          <p id="statsEmpty" class="stats-empty" data-i18n="statsEmpty">Finish a daily puzzle to start tracking stats.</p>
+        </section>
+      </div>
+    </dialog>
+
+    <script src="timely.js"></script>
+  </body>
+</html>
