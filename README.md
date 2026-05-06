@@ -15,6 +15,19 @@ Angly, Colory e Timely hanno modalità facile e difficile. Movly ha due pool gio
 
 Il frontend usa HTML, CSS e JavaScript vanilla. Movly usa un backend FastAPI con MongoDB per generare e salvare i film daily condivisi.
 
+## Struttura
+
+```text
+frontend/
+  pages/    HTML dei giochi e della home
+  scripts/  JavaScript vanilla dei giochi
+  styles/   CSS condiviso
+  assets/   icone e immagini statiche
+backend/
+  app/      FastAPI, API Movly e servizi
+  tests/    test backend
+```
+
 ## Avvio locale
 
 Configura le variabili in `.env` o `.env.local`:
@@ -25,7 +38,7 @@ MONGODB_DB=daily_moris_games
 TMDB_BEARER_TOKEN=...
 OPENAI_API_KEY=...
 OPENAI_EMOJI_MODEL=gpt-4.1-mini
-STATIC_ROOT=..
+STATIC_ROOT=../frontend
 ```
 
 Poi avvia il backend:
@@ -36,7 +49,9 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload --port 8000
 ```
 
-Apri `http://localhost:8000/movly.html`. Anche gli altri giochi restano disponibili dallo stesso host.
+Apri `http://localhost:8000/movly`. Anche gli altri giochi restano disponibili dallo stesso host con URL puliti: `/angly`, `/colory`, `/timely` e `/movly`.
+
+Il frontend vive in `frontend/`; se `STATIC_ROOT` non e impostata, FastAPI la risolve automaticamente dalla root del repo. Il vecchio `STATIC_ROOT=..` resta compatibile.
 
 ## API Movly
 

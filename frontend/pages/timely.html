@@ -3,62 +3,62 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Guess the daily angle in Angly, a quick browser puzzle with four attempts.">
+    <meta name="description" content="Order five historical events from today in history in Timely, a quick browser puzzle.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
-    <meta name="apple-mobile-web-app-title" content="Angly">
+    <meta name="apple-mobile-web-app-title" content="Timely">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Angly">
-    <meta property="og:description" content="Guess the daily angle in four attempts.">
-    <meta property="og:image" content="assets/icon.png">
+    <meta property="og:title" content="Timely">
+    <meta property="og:description" content="Order five events from today in history.">
+    <meta property="og:image" content="/assets/icon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Angly">
-    <meta name="twitter:description" content="Guess the daily angle in four attempts.">
-    <meta name="twitter:image" content="assets/icon.png">
-    <title>Angly</title>
-    <link rel="icon" type="image/png" href="assets/icon.png">
-    <link rel="apple-touch-icon" href="assets/icon.png">
-    <link rel="manifest" href="site.webmanifest">
+    <meta name="twitter:title" content="Timely">
+    <meta name="twitter:description" content="Order five events from today in history.">
+    <meta name="twitter:image" content="/assets/icon.png">
+    <title>Timely</title>
+    <link rel="icon" type="image/png" href="/assets/icon.png">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles/styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="game-panel" aria-labelledby="app-title">
+      <section class="game-panel timely-panel" aria-labelledby="app-title">
         <nav class="site-nav" aria-label="Games">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="/">
             <i class="fa-solid fa-house" aria-hidden="true"></i>
             <span data-i18n="navHome">Home</span>
           </a>
-          <a class="nav-link is-active" href="angly.html">
+          <a class="nav-link" href="/angly">
             <span class="nav-icon-wrap" aria-hidden="true">
-              <img class="nav-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
+              <img class="nav-game-icon" src="/assets/angly-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-drafting-compass"></i>
             </span>
             <span data-i18n="navAngly">Angly</span>
           </a>
-          <a class="nav-link" href="colory.html">
+          <a class="nav-link" href="/colory">
             <span class="nav-icon-wrap" aria-hidden="true">
-              <img class="nav-game-icon" src="assets/colory-icon.png" alt="" onerror="this.hidden = true">
+              <img class="nav-game-icon" src="/assets/colory-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-palette"></i>
             </span>
             <span data-i18n="navColory">Colory</span>
           </a>
-          <a class="nav-link" href="timely.html">
+          <a class="nav-link is-active" href="/timely">
             <span class="nav-icon-wrap" aria-hidden="true">
-              <img class="nav-game-icon" src="assets/timely-icon.png" alt="" onerror="this.hidden = true">
+              <img class="nav-game-icon" src="/assets/timely-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-timeline"></i>
             </span>
             <span data-i18n="navTimely">Timely</span>
           </a>
-          <a class="nav-link" href="movly.html">
+          <a class="nav-link" href="/movly">
             <span class="nav-icon-wrap" aria-hidden="true">
-              <img class="nav-game-icon" src="assets/movly-icon.png" alt="" onerror="this.hidden = true">
+              <img class="nav-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-film"></i>
             </span>
             <span data-i18n="navMovly">Movly</span>
@@ -69,10 +69,10 @@
           <div class="title-block">
             <h1 class="game-title" id="app-title">
               <span class="title-icon-wrap" aria-hidden="true">
-                <img class="title-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-drafting-compass"></i>
+                <img class="title-game-icon" src="/assets/timely-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-timeline"></i>
               </span>
-              <span data-i18n="title">Angly</span>
+              <span data-i18n="title">Timely</span>
             </h1>
           </div>
 
@@ -99,43 +99,46 @@
           </button>
         </div>
 
-        <div class="angle-stage" id="angleStage" aria-live="off">
-          <svg id="angleSvg" class="angle-svg" viewBox="0 0 360 360" role="img" aria-labelledby="angleTitle angleDesc">
-            <title id="angleTitle">Daily angle</title>
-            <desc id="angleDesc">An angle to guess</desc>
-            <circle class="guide-ring" cx="180" cy="180" r="132"></circle>
-            <path id="angleSector" class="angle-sector" d=""></path>
-            <path id="angleArc" class="angle-arc" d=""></path>
-            <line id="baseRay" class="base-ray" x1="180" y1="180" x2="312" y2="180"></line>
-            <line id="targetRay" class="target-ray" x1="180" y1="180" x2="312" y2="180"></line>
-            <circle class="origin-dot" cx="180" cy="180" r="7"></circle>
-          </svg>
+        <details class="mode-legend">
+          <summary>
+            <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+            <span data-i18n="modeLegendTitle">Modes</span>
+          </summary>
+          <div class="mode-legend-copy">
+            <p><strong data-i18n="easy">Easy</strong>: <span data-i18n="easyLegend">shows which positions are correct.</span></p>
+            <p><strong data-i18n="hard">Hard</strong>: <span data-i18n="hardLegend">gives no hints between attempts.</span></p>
+          </div>
+        </details>
+
+        <div class="timely-stage" id="timelyStage" aria-live="off">
+          <div class="timely-loading" id="timelyLoading">
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span data-i18n="loading">Loading today's events</span>
+          </div>
+          <ol class="timely-list" id="timelyList" data-i18n-aria="timelyListLabel" aria-label="Timely events"></ol>
         </div>
 
         <div class="status-strip" id="statusStrip">
           <div class="status-copy">
-            <i id="statusIcon" class="fa-solid fa-bullseye" aria-hidden="true"></i>
-            <p id="statusText" class="status-text" data-i18n="ready">Make your first guess.</p>
+            <i id="statusIcon" class="fa-solid fa-timeline" aria-hidden="true"></i>
+            <p id="statusText" class="status-text" data-i18n="ready">Order events from oldest to newest.</p>
           </div>
           <div class="attempt-dots" id="attemptDots" data-i18n-aria="attemptsLabel" aria-label="Attempts"></div>
         </div>
 
-        <form class="guess-form" id="guessForm" novalidate>
-          <label class="guess-label" for="guessInput" data-i18n="guessLabel">Degrees</label>
-          <div class="input-row">
-            <input id="guessInput" class="guess-input" name="guess" type="tel" inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" autocomplete="off" min="0" max="360" placeholder="0-360">
-            <button class="guess-button" type="submit">
-              <i class="fa-solid fa-crosshairs" aria-hidden="true"></i>
-              <span data-i18n="guessButton">Guess</span>
-            </button>
-          </div>
+        <div class="timely-attempt-history" id="attemptHistory" data-i18n-aria="attemptHistoryLabel" aria-label="Attempt history"></div>
+
+        <form class="timely-form" id="timelyForm" novalidate>
+          <button class="guess-button timely-submit" type="submit">
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+            <span data-i18n="submitOrder">Submit order</span>
+          </button>
           <p id="formMessage" class="form-message" aria-live="polite">
             <i id="formMessageIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
             <span id="formMessageText"></span>
           </p>
         </form>
 
-        <ol class="guess-list" id="guessList" data-i18n-aria="previousGuesses" aria-label="Previous guesses"></ol>
       </section>
     </main>
 
@@ -180,13 +183,13 @@
         </div>
 
         <section class="distribution-section" aria-labelledby="distributionTitle">
-          <h3 id="distributionTitle" data-i18n="distributionTitle">Guess distribution</h3>
+          <h3 id="distributionTitle" data-i18n="distributionTitle">Attempts</h3>
           <div id="statsDistribution" class="distribution-list"></div>
           <p id="statsEmpty" class="stats-empty" data-i18n="statsEmpty">Finish a daily puzzle to start tracking stats.</p>
         </section>
       </div>
     </dialog>
 
-    <script src="angly.js"></script>
+    <script src="/scripts/timely.js"></script>
   </body>
 </html>
