@@ -1,7 +1,7 @@
 {
   "name": "Daily Games",
   "short_name": "Daily",
-  "description": "Small daily browser puzzles: Angly, Colory, and Timely.",
+  "description": "Small daily browser puzzles: Angly, Colory, Timely, and Movly.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

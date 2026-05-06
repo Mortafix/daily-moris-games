@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, and order historical events.">
+    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, order historical events, and decode movies from emoji.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
@@ -14,11 +14,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Daily Games">
-    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, and Timely.">
+    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, Timely, and Movly.">
     <meta property="og:image" content="assets/icon.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Daily Games">
-    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, and Timely.">
+    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, Timely, and Movly.">
     <meta name="twitter:image" content="assets/icon.png">
     <title>Daily Games</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
@@ -55,6 +55,13 @@
               <i class="fa-solid fa-timeline"></i>
             </span>
             <span data-i18n="navTimely">Timely</span>
+          </a>
+          <a class="nav-link" href="movly.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/movly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-film"></i>
+            </span>
+            <span data-i18n="navMovly">Movly</span>
           </a>
         </nav>
 
@@ -118,6 +125,22 @@
             </div>
             <a class="play-link" href="timely.html">
               <span data-i18n="playTimely">Play Timely</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="game-card is-movly">
+            <div class="game-card-art" aria-hidden="true">
+              <img class="game-card-png" src="assets/movly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+              <i class="fa-solid fa-film"></i>
+            </div>
+            <div class="game-card-copy">
+              <h2 data-i18n="movlyTitle">Movly</h2>
+              <p data-i18n="movlyDescription">Guess the daily movie from emoji</p>
+              <span class="game-status" id="movlyStatus"></span>
+            </div>
+            <a class="play-link" href="movly.html">
+              <span data-i18n="playMovly">Play Movly</span>
               <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </article>

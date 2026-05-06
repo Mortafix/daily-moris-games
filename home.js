@@ -2,6 +2,7 @@ const LANGUAGE_KEY = "angle-daily:v1:language";
 const ANGLY_PREFIX = "angle-daily:v1";
 const COLORY_PREFIX = "colory-daily:v1";
 const TIMELY_PREFIX = "timely-daily:v1";
+const MOVLY_PREFIX = "movly-daily:v1";
 
 const dictionaries = {
   en: {
@@ -11,6 +12,7 @@ const dictionaries = {
     navAngly: "Angly",
     navColory: "Colory",
     navTimely: "Timely",
+    navMovly: "Movly",
     dailyDateLabel: "Daily date",
     languageLabel: "Language",
     italianLanguage: "Italian",
@@ -21,9 +23,12 @@ const dictionaries = {
     coloryDescription: "Match the daily color",
     timelyTitle: "Timely",
     timelyDescription: "Order today's historical events",
+    movlyTitle: "Movly",
+    movlyDescription: "Guess the daily movie from emoji",
     playAngly: "Play Angly",
     playColory: "Play Colory",
     playTimely: "Play Timely",
+    playMovly: "Play Movly",
     ready: "To play",
     inProgress: "In progress",
     completed: "Completed",
@@ -38,6 +43,7 @@ const dictionaries = {
     navAngly: "Angly",
     navColory: "Colory",
     navTimely: "Timely",
+    navMovly: "Movly",
     dailyDateLabel: "Data del daily",
     languageLabel: "Lingua",
     italianLanguage: "Italiano",
@@ -48,9 +54,12 @@ const dictionaries = {
     coloryDescription: "Ricrea il colore del giorno",
     timelyTitle: "Timely",
     timelyDescription: "Ordina gli eventi storici di oggi",
+    movlyTitle: "Movly",
+    movlyDescription: "Indovina il film del giorno dalle emoji",
     playAngly: "Gioca ad Angly",
     playColory: "Gioca a Colory",
     playTimely: "Gioca a Timely",
+    playMovly: "Gioca a Movly",
     ready: "Da giocare",
     inProgress: "In corso",
     completed: "Completato",
@@ -85,6 +94,7 @@ const elements = {
   anglyStatus: document.querySelector("#anglyStatus"),
   coloryStatus: document.querySelector("#coloryStatus"),
   timelyStatus: document.querySelector("#timelyStatus"),
+  movlyStatus: document.querySelector("#movlyStatus"),
 };
 
 let lang = getInitialLanguage();
@@ -174,6 +184,30 @@ function getTimelyStatus() {
   return "ready";
 }
 
+function loadMovlyState(pool) {
+  try {
+    const state = JSON.parse(safeGetItem(`${MOVLY_PREFIX}:${todayKey}:${pool}`));
+    return state?.date === todayKey && state?.pool === pool ? state : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function getMovlyStatus() {
+  const states = ["best", "trending"].map(loadMovlyState).filter(Boolean);
+  const completedCount = states.filter((state) => state.status === "won" || state.status === "lost").length;
+  if (completedCount === 2) {
+    return "completed";
+  }
+  if (
+    completedCount > 0
+    || states.some((state) => Array.isArray(state.guesses) && state.guesses.length > 0)
+  ) {
+    return "inProgress";
+  }
+  return "ready";
+}
+
 function renderGameStatus(element, statusKey, gameName) {
   const config = statusConfig[statusKey] ?? statusConfig.ready;
   element.className = `game-status is-${statusKey}`;
@@ -207,6 +241,7 @@ function render() {
   renderGameStatus(elements.anglyStatus, getGameStatus(ANGLY_PREFIX), t("anglyTitle"));
   renderGameStatus(elements.coloryStatus, getGameStatus(COLORY_PREFIX), t("coloryTitle"));
   renderGameStatus(elements.timelyStatus, getTimelyStatus(), t("timelyTitle"));
+  renderGameStatus(elements.movlyStatus, getMovlyStatus(), t("movlyTitle"));
 
   elements.languageButtons.forEach((button) => {
     const isActive = button.dataset.lang === lang;

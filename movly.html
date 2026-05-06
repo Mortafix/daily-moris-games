@@ -3,39 +3,42 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Guess the daily angle in Angly, a quick browser puzzle with four attempts.">
+    <meta name="description" content="Guess the daily movie from progressive emoji hints in Movly.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
-    <meta name="apple-mobile-web-app-title" content="Angly">
+    <meta name="apple-mobile-web-app-title" content="Movly">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Angly">
-    <meta property="og:description" content="Guess the daily angle in four attempts.">
+    <meta property="og:title" content="Movly">
+    <meta property="og:description" content="Guess the daily movie from emoji.">
     <meta property="og:image" content="assets/icon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Angly">
-    <meta name="twitter:description" content="Guess the daily angle in four attempts.">
+    <meta name="twitter:title" content="Movly">
+    <meta name="twitter:description" content="Guess the daily movie from emoji.">
     <meta name="twitter:image" content="assets/icon.png">
-    <title>Angly</title>
+    <title>Movly</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
     <link rel="apple-touch-icon" href="assets/icon.png">
     <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="game-panel" aria-labelledby="app-title">
+      <section class="game-panel movly-panel" aria-labelledby="app-title">
         <nav class="site-nav" aria-label="Games">
           <a class="nav-link" href="index.html">
             <i class="fa-solid fa-house" aria-hidden="true"></i>
             <span data-i18n="navHome">Home</span>
           </a>
-          <a class="nav-link is-active" href="angly.html">
+          <a class="nav-link" href="angly.html">
             <span class="nav-icon-wrap" aria-hidden="true">
               <img class="nav-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-drafting-compass"></i>
@@ -56,7 +59,7 @@
             </span>
             <span data-i18n="navTimely">Timely</span>
           </a>
-          <a class="nav-link" href="movly.html">
+          <a class="nav-link is-active" href="movly.html">
             <span class="nav-icon-wrap" aria-hidden="true">
               <img class="nav-game-icon" src="assets/movly-icon.png" alt="" onerror="this.hidden = true">
               <i class="fa-solid fa-film"></i>
@@ -69,10 +72,10 @@
           <div class="title-block">
             <h1 class="game-title" id="app-title">
               <span class="title-icon-wrap" aria-hidden="true">
-                <img class="title-game-icon" src="assets/angly-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-drafting-compass"></i>
+                <img class="title-game-icon" src="assets/movly-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-film"></i>
               </span>
-              <span data-i18n="title">Angly</span>
+              <span data-i18n="title">Movly</span>
             </h1>
           </div>
 
@@ -88,46 +91,59 @@
           </div>
         </header>
 
-        <div class="mode-switch" role="tablist" data-i18n-aria="difficultyLabel" aria-label="Difficulty">
-          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-mode="easy">
-            <i class="fa-solid fa-temperature-half" aria-hidden="true"></i>
-            <span data-i18n="easy">Easy</span>
+        <div class="mode-switch movly-pool-switch" role="tablist" data-i18n-aria="poolLabel" aria-label="Pool">
+          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-pool="best">
+            <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+            <span data-i18n="best">Best</span>
           </button>
-          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="hard">
-            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-            <span data-i18n="hard">Hard</span>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-pool="trending">
+            <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
+            <span data-i18n="trending">Trending</span>
           </button>
         </div>
 
-        <div class="angle-stage" id="angleStage" aria-live="off">
-          <svg id="angleSvg" class="angle-svg" viewBox="0 0 360 360" role="img" aria-labelledby="angleTitle angleDesc">
-            <title id="angleTitle">Daily angle</title>
-            <desc id="angleDesc">An angle to guess</desc>
-            <circle class="guide-ring" cx="180" cy="180" r="132"></circle>
-            <path id="angleSector" class="angle-sector" d=""></path>
-            <path id="angleArc" class="angle-arc" d=""></path>
-            <line id="baseRay" class="base-ray" x1="180" y1="180" x2="312" y2="180"></line>
-            <line id="targetRay" class="target-ray" x1="180" y1="180" x2="312" y2="180"></line>
-            <circle class="origin-dot" cx="180" cy="180" r="7"></circle>
-          </svg>
+        <div class="movly-stage" id="movlyStage" aria-live="polite">
+          <div class="movly-loading" id="movlyLoading">
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span data-i18n="loading">Loading today's movie</span>
+          </div>
+          <p class="movly-emoji-line" id="emojiLine" data-i18n-aria="emojiLabel" aria-label="Emoji hint"></p>
+        </div>
+
+        <div class="movly-result" id="resultPanel" hidden>
+          <div class="movly-poster" id="resultPoster" aria-hidden="true">
+            <i class="fa-solid fa-film"></i>
+          </div>
+          <div class="movly-result-copy">
+            <span class="guess-label" data-i18n="answerLabel">Answer</span>
+            <h2 id="resultTitle"></h2>
+            <p id="resultYear"></p>
+          </div>
         </div>
 
         <div class="status-strip" id="statusStrip">
           <div class="status-copy">
-            <i id="statusIcon" class="fa-solid fa-bullseye" aria-hidden="true"></i>
-            <p id="statusText" class="status-text" data-i18n="ready">Make your first guess.</p>
+            <i id="statusIcon" class="fa-solid fa-film" aria-hidden="true"></i>
+            <p id="statusText" class="status-text" data-i18n="ready">Guess the movie from emoji.</p>
           </div>
           <div class="attempt-dots" id="attemptDots" data-i18n-aria="attemptsLabel" aria-label="Attempts"></div>
         </div>
 
-        <form class="guess-form" id="guessForm" novalidate>
-          <label class="guess-label" for="guessInput" data-i18n="guessLabel">Degrees</label>
-          <div class="input-row">
-            <input id="guessInput" class="guess-input" name="guess" type="tel" inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" autocomplete="off" min="0" max="360" placeholder="0-360">
-            <button class="guess-button" type="submit">
-              <i class="fa-solid fa-crosshairs" aria-hidden="true"></i>
-              <span data-i18n="guessButton">Guess</span>
-            </button>
+        <form class="guess-form movly-form" id="guessForm" novalidate>
+          <label class="guess-label" for="guessInput" data-i18n="guessLabel">Movie</label>
+          <div class="movly-search-wrap">
+            <div class="input-row">
+              <input id="guessInput" class="guess-input" name="guess" type="text" enterkeyhint="done" autocomplete="off" placeholder="Titanic">
+              <button class="guess-button" type="submit">
+                <i class="fa-solid fa-ticket" aria-hidden="true"></i>
+                <span data-i18n="guessButton">Guess</span>
+              </button>
+              <button class="skip-button" id="skipButton" type="button" data-i18n-aria="skipButton" aria-label="Skip">
+                <i class="fa-solid fa-forward-step" aria-hidden="true"></i>
+                <span data-i18n="skipButton">Skip</span>
+              </button>
+            </div>
+            <div class="movly-suggestions" id="suggestions" role="listbox" hidden></div>
           </div>
           <p id="formMessage" class="form-message" aria-live="polite">
             <i id="formMessageIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
@@ -135,7 +151,7 @@
           </p>
         </form>
 
-        <ol class="guess-list" id="guessList" data-i18n-aria="previousGuesses" aria-label="Previous guesses"></ol>
+        <ol class="movly-guess-list" id="guessList" data-i18n-aria="previousGuesses" aria-label="Previous guesses"></ol>
       </section>
     </main>
 
@@ -180,13 +196,13 @@
         </div>
 
         <section class="distribution-section" aria-labelledby="distributionTitle">
-          <h3 id="distributionTitle" data-i18n="distributionTitle">Guess distribution</h3>
+          <h3 id="distributionTitle" data-i18n="distributionTitle">Guesses</h3>
           <div id="statsDistribution" class="distribution-list"></div>
           <p id="statsEmpty" class="stats-empty" data-i18n="statsEmpty">Finish a daily puzzle to start tracking stats.</p>
         </section>
       </div>
     </dialog>
 
-    <script src="angly.js"></script>
+    <script src="movly.js"></script>
   </body>
 </html>
