@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Small daily browser puzzles: guess angles with Angly and match RGB colors with Colory.">
+    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, and order historical events.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
@@ -14,11 +14,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Daily Games">
-    <meta property="og:description" content="Small daily browser puzzles: Angly and Colory.">
+    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, and Timely.">
     <meta property="og:image" content="assets/icon.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Daily Games">
-    <meta name="twitter:description" content="Small daily browser puzzles: Angly and Colory.">
+    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, and Timely.">
     <meta name="twitter:image" content="assets/icon.png">
     <title>Daily Games</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
@@ -49,6 +49,13 @@
             </span>
             <span data-i18n="navColory">Colory</span>
           </a>
+          <a class="nav-link" href="timely.html">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="assets/timely-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-timeline"></i>
+            </span>
+            <span data-i18n="navTimely">Timely</span>
+          </a>
         </nav>
 
         <header class="home-hero">
@@ -74,7 +81,7 @@
             </div>
             <div class="game-card-copy">
               <h2 data-i18n="anglyTitle">Angly</h2>
-              <p data-i18n="anglyDescription">Guess the daily angle in a few attempts.</p>
+              <p data-i18n="anglyDescription">Guess the daily angle</p>
               <span class="game-status" id="anglyStatus"></span>
             </div>
             <a class="play-link" href="angly.html">
@@ -90,11 +97,27 @@
             </div>
             <div class="game-card-copy">
               <h2 data-i18n="coloryTitle">Colory</h2>
-              <p data-i18n="coloryDescription">Match the daily color with RGB sliders.</p>
+              <p data-i18n="coloryDescription">Match the daily color</p>
               <span class="game-status" id="coloryStatus"></span>
             </div>
             <a class="play-link" href="colory.html">
               <span data-i18n="playColory">Play Colory</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="game-card is-timely">
+            <div class="game-card-art" aria-hidden="true">
+              <img class="game-card-png" src="assets/timely-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+              <i class="fa-solid fa-timeline"></i>
+            </div>
+            <div class="game-card-copy">
+              <h2 data-i18n="timelyTitle">Timely</h2>
+              <p data-i18n="timelyDescription">Order today's historical events</p>
+              <span class="game-status" id="timelyStatus"></span>
+            </div>
+            <a class="play-link" href="timely.html">
+              <span data-i18n="playTimely">Play Timely</span>
               <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </article>

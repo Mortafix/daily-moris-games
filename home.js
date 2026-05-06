@@ -1,6 +1,7 @@
 const LANGUAGE_KEY = "angle-daily:v1:language";
 const ANGLY_PREFIX = "angle-daily:v1";
 const COLORY_PREFIX = "colory-daily:v1";
+const TIMELY_PREFIX = "timely-daily:v1";
 
 const dictionaries = {
   en: {
@@ -9,6 +10,7 @@ const dictionaries = {
     navHome: "Home",
     navAngly: "Angly",
     navColory: "Colory",
+    navTimely: "Timely",
     dailyDateLabel: "Daily date",
     languageLabel: "Language",
     italianLanguage: "Italian",
@@ -16,9 +18,12 @@ const dictionaries = {
     anglyTitle: "Angly",
     anglyDescription: "Guess the daily angle",
     coloryTitle: "Colory",
-    coloryDescription: "Match the daily color with RGB sliders",
+    coloryDescription: "Match the daily color",
+    timelyTitle: "Timely",
+    timelyDescription: "Order today's historical events",
     playAngly: "Play Angly",
     playColory: "Play Colory",
+    playTimely: "Play Timely",
     ready: "To play",
     inProgress: "In progress",
     completed: "Completed",
@@ -32,6 +37,7 @@ const dictionaries = {
     navHome: "Home",
     navAngly: "Angly",
     navColory: "Colory",
+    navTimely: "Timely",
     dailyDateLabel: "Data del daily",
     languageLabel: "Lingua",
     italianLanguage: "Italiano",
@@ -39,9 +45,12 @@ const dictionaries = {
     anglyTitle: "Angly",
     anglyDescription: "Indovina l'angolo del giorno",
     coloryTitle: "Colory",
-    coloryDescription: "Ricrea il colore del giorno con gli slider RGB",
+    coloryDescription: "Ricrea il colore del giorno",
+    timelyTitle: "Timely",
+    timelyDescription: "Ordina gli eventi storici di oggi",
     playAngly: "Gioca ad Angly",
     playColory: "Gioca a Colory",
+    playTimely: "Gioca a Timely",
     ready: "Da giocare",
     inProgress: "In corso",
     completed: "Completato",
@@ -75,6 +84,7 @@ const elements = {
   languageButtons: [...document.querySelectorAll(".language-button")],
   anglyStatus: document.querySelector("#anglyStatus"),
   coloryStatus: document.querySelector("#coloryStatus"),
+  timelyStatus: document.querySelector("#timelyStatus"),
 };
 
 let lang = getInitialLanguage();
@@ -130,12 +140,35 @@ function loadDailyState(prefix, mode) {
   }
 }
 
+function loadTimelyState() {
+  try {
+    const state = JSON.parse(safeGetItem(`${TIMELY_PREFIX}:${todayKey}`));
+    return state?.date === todayKey ? state : null;
+  } catch (error) {
+    return null;
+  }
+}
+
 function getGameStatus(prefix) {
   const states = ["easy", "hard"].map((mode) => loadDailyState(prefix, mode)).filter(Boolean);
   if (states.some((state) => state.status === "won" || state.status === "lost")) {
     return "completed";
   }
   if (states.some((state) => Array.isArray(state.guesses) && state.guesses.length > 0)) {
+    return "inProgress";
+  }
+  return "ready";
+}
+
+function getTimelyStatus() {
+  const state = loadTimelyState();
+  if (!state) {
+    return "ready";
+  }
+  if (state.status === "won" || state.status === "lost") {
+    return "completed";
+  }
+  if (Array.isArray(state.attempts) && state.attempts.length > 0) {
     return "inProgress";
   }
   return "ready";
@@ -173,6 +206,7 @@ function render() {
   elements.dateLabel.textContent = formatDateLabel(todayKey);
   renderGameStatus(elements.anglyStatus, getGameStatus(ANGLY_PREFIX), t("anglyTitle"));
   renderGameStatus(elements.coloryStatus, getGameStatus(COLORY_PREFIX), t("coloryTitle"));
+  renderGameStatus(elements.timelyStatus, getTimelyStatus(), t("timelyTitle"));
 
   elements.languageButtons.forEach((button) => {
     const isActive = button.dataset.lang === lang;

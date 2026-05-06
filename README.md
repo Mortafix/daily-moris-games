@@ -6,6 +6,7 @@ Una piccola raccolta di giochi daily da browser, pensata per partite veloci una 
 
 - **Angly**: indovina i gradi dell'angolo del giorno.
 - **Colory**: ricrea il colore del giorno usando i valori RGB.
+- **Timely**: ordina cinque eventi accaduti oggi nella storia dal più antico al più recente.
 
 Ogni gioco ha modalità facile e difficile, progressi salvati localmente e statistiche giornaliere sul dispositivo.
 
