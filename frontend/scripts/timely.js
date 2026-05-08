@@ -15,6 +15,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navMenu: "Games",
     dailyDateLabel: "Daily date",
     italianLanguage: "Italian",
     englishLanguage: "English",
@@ -70,6 +71,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navMenu: "Giochi",
     dailyDateLabel: "Data del daily",
     italianLanguage: "Italiano",
     englishLanguage: "Inglese",
@@ -176,6 +178,8 @@ let state = loadState();
 let loadStatus = state.events.length === MAX_EVENTS ? "ready" : "idle";
 let loadError = "";
 let draggedEventId = null;
+let dropTargetEventId = null;
+let dropTargetPlaceAfter = false;
 let loadRequestId = 0;
 
 function safeGetItem(key) {
@@ -935,6 +939,42 @@ function dropEvent(draggedId, targetId, placeAfter) {
   renderGame();
 }
 
+function removeDropPlaceholder() {
+  dropTargetEventId = null;
+  dropTargetPlaceAfter = false;
+  elements.timelyList.querySelector(".timely-drop-placeholder")?.remove();
+}
+
+function updateDropPlaceholder(targetItem, clientY) {
+  if (!draggedEventId || !targetItem || targetItem.dataset.eventId === draggedEventId) {
+    removeDropPlaceholder();
+    return;
+  }
+
+  const targetIndex = state.order.indexOf(targetItem.dataset.eventId);
+  if (targetIndex < 0 || getLockedPositions()[targetIndex]) {
+    removeDropPlaceholder();
+    return;
+  }
+
+  const rect = targetItem.getBoundingClientRect();
+  const placeAfter = clientY > rect.top + rect.height / 2;
+  const placeholder = (
+    elements.timelyList.querySelector(".timely-drop-placeholder")
+    || document.createElement("li")
+  );
+  placeholder.className = "timely-drop-placeholder";
+  placeholder.setAttribute("aria-hidden", "true");
+
+  if (placeAfter) {
+    targetItem.after(placeholder);
+  } else {
+    targetItem.before(placeholder);
+  }
+  dropTargetEventId = targetItem.dataset.eventId;
+  dropTargetPlaceAfter = placeAfter;
+}
+
 function handleSubmit(event) {
   event.preventDefault();
 
@@ -1127,6 +1167,7 @@ function initTimelyListEvents() {
       event.preventDefault();
       return;
     }
+    removeDropPlaceholder();
     draggedEventId = item.dataset.eventId;
     item.classList.add("is-dragging");
     event.dataTransfer.effectAllowed = "move";
@@ -1139,29 +1180,49 @@ function initTimelyListEvents() {
     }
     const item = event.target.closest(".timely-card");
     const index = item ? state.order.indexOf(item.dataset.eventId) : -1;
-    if (!item || getLockedPositions()[index]) {
+    if (!item) {
+      if (dropTargetEventId) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+      }
+      return;
+    }
+    if (getLockedPositions()[index]) {
+      removeDropPlaceholder();
       return;
     }
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
+    updateDropPlaceholder(item, event.clientY);
   });
 
   elements.timelyList.addEventListener("drop", (event) => {
     const item = event.target.closest(".timely-card");
-    if (!item || !draggedEventId) {
+    if ((!item && !dropTargetEventId) || !draggedEventId) {
       return;
     }
     event.preventDefault();
-    const rect = item.getBoundingClientRect();
-    const placeAfter = event.clientY > rect.top + rect.height / 2;
-    dropEvent(draggedEventId, item.dataset.eventId, placeAfter);
+    const targetId = item?.dataset.eventId || dropTargetEventId;
+    const targetRect = item?.getBoundingClientRect();
+    const placeAfter = targetRect
+      ? event.clientY > targetRect.top + targetRect.height / 2
+      : dropTargetPlaceAfter;
+    removeDropPlaceholder();
+    dropEvent(draggedEventId, targetId, placeAfter);
   });
 
   elements.timelyList.addEventListener("dragend", () => {
     draggedEventId = null;
+    removeDropPlaceholder();
     elements.timelyList.querySelectorAll(".is-dragging").forEach((item) => {
       item.classList.remove("is-dragging");
     });
+  });
+
+  elements.timelyList.addEventListener("dragleave", (event) => {
+    if (!elements.timelyList.contains(event.relatedTarget)) {
+      removeDropPlaceholder();
+    }
   });
 }
 

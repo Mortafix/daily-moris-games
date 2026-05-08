@@ -12,6 +12,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navMenu: "Games",
     dailyDateLabel: "Daily date",
     italianLanguage: "Italian",
     englishLanguage: "English",
@@ -37,6 +38,7 @@ const dictionaries = {
     noSuggestions: "No movies found",
     invalidEmpty: "Enter a movie title",
     invalidMovie: "Movie not found",
+    invalidSelection: "Select a movie from the list or skip.",
     duplicate: "You already tried {movie}",
     loadingMessage: "Movly is still loading",
     sameSaga: "Same saga, but not this one.",
@@ -73,6 +75,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navMenu: "Giochi",
     dailyDateLabel: "Data del daily",
     italianLanguage: "Italiano",
     englishLanguage: "Inglese",
@@ -98,6 +101,7 @@ const dictionaries = {
     noSuggestions: "Nessun film trovato",
     invalidEmpty: "Inserisci il titolo di un film",
     invalidMovie: "Film non trovato",
+    invalidSelection: "Seleziona un film dalla lista oppure salta.",
     duplicate: "Hai gia provato {movie}",
     loadingMessage: "Movly si sta ancora caricando",
     sameSaga: "Stessa saga, ma non e questo.",
@@ -194,6 +198,7 @@ let searchRequestId = 0;
 let searchTimer = null;
 let suggestions = [];
 let selectedSuggestion = null;
+let activeSuggestionIndex = -1;
 
 function safeGetItem(key) {
   try {
@@ -828,24 +833,38 @@ function searchUrl(query) {
 }
 
 function hideSuggestions() {
+  activeSuggestionIndex = -1;
   elements.suggestions.hidden = true;
   elements.suggestions.replaceChildren();
+  elements.input.setAttribute("aria-expanded", "false");
+  elements.input.removeAttribute("aria-activedescendant");
 }
 
 function renderSuggestions(message = "") {
   const fragment = document.createDocumentFragment();
   if (message) {
+    activeSuggestionIndex = -1;
     const empty = document.createElement("div");
     empty.className = "movly-suggestion-empty";
     empty.textContent = message;
     fragment.append(empty);
   } else {
-    suggestions.forEach((movie) => {
+    activeSuggestionIndex = Math.max(
+      -1,
+      Math.min(activeSuggestionIndex, suggestions.length - 1),
+    );
+    suggestions.forEach((movie, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "movly-suggestion";
+      if (index === activeSuggestionIndex) {
+        button.classList.add("is-active");
+      }
       button.setAttribute("role", "option");
+      button.setAttribute("aria-selected", String(index === activeSuggestionIndex));
+      button.id = `movly-suggestion-${movie.id}`;
       button.dataset.movieId = String(movie.id);
+      button.dataset.suggestionIndex = String(index);
 
       const poster = createPosterNode(movie);
       const copy = document.createElement("span");
@@ -866,11 +885,49 @@ function renderSuggestions(message = "") {
   }
   elements.suggestions.replaceChildren(fragment);
   elements.suggestions.hidden = false;
+  elements.input.setAttribute("aria-expanded", "true");
+  if (message) {
+    elements.input.removeAttribute("aria-activedescendant");
+  } else {
+    syncActiveSuggestion();
+  }
+}
+
+function syncActiveSuggestion({ scroll = true } = {}) {
+  const buttons = [...elements.suggestions.querySelectorAll(".movly-suggestion")];
+  buttons.forEach((button, index) => {
+    const isActive = index === activeSuggestionIndex;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+  });
+
+  const activeSuggestion = suggestions[activeSuggestionIndex];
+  if (!activeSuggestion) {
+    elements.input.removeAttribute("aria-activedescendant");
+    return;
+  }
+  const activeId = `movly-suggestion-${activeSuggestion.id}`;
+  elements.input.setAttribute("aria-activedescendant", activeId);
+  if (scroll) {
+    document.getElementById(activeId)?.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function setActiveSuggestion(index) {
+  if (!suggestions.length) {
+    activeSuggestionIndex = -1;
+    elements.input.removeAttribute("aria-activedescendant");
+    return;
+  }
+  activeSuggestionIndex = (index + suggestions.length) % suggestions.length;
+  syncActiveSuggestion();
 }
 
 async function runSearch(query) {
   const requestId = searchRequestId + 1;
   searchRequestId = requestId;
+  suggestions = [];
+  activeSuggestionIndex = -1;
   renderSuggestions(t("searching"));
 
   try {
@@ -880,6 +937,7 @@ async function runSearch(query) {
       return;
     }
     suggestions = Array.isArray(payload.results) ? payload.results : [];
+    activeSuggestionIndex = -1;
     if (!suggestions.length) {
       renderSuggestions(t("noSuggestions"));
       return;
@@ -888,6 +946,7 @@ async function runSearch(query) {
   } catch (error) {
     if (requestId === searchRequestId) {
       suggestions = [];
+      activeSuggestionIndex = -1;
       renderSuggestions(t("noSuggestions"));
     }
   }
@@ -895,6 +954,7 @@ async function runSearch(query) {
 
 function scheduleSearch() {
   selectedSuggestion = null;
+  activeSuggestionIndex = -1;
   const query = elements.input.value.trim();
   clearTimeout(searchTimer);
   if (query.length < 2 || isInteractionLocked()) {
@@ -916,6 +976,45 @@ function selectSuggestion(movieId) {
   elements.input.focus();
 }
 
+function handleSuggestionKeydown(event) {
+  if (isInteractionLocked()) {
+    return;
+  }
+  if (event.key === "ArrowDown") {
+    if (suggestions.length) {
+      event.preventDefault();
+      if (elements.suggestions.hidden) {
+        activeSuggestionIndex = 0;
+        renderSuggestions();
+      } else {
+        setActiveSuggestion(activeSuggestionIndex + 1);
+      }
+    }
+    return;
+  }
+  if (event.key === "ArrowUp") {
+    if (suggestions.length) {
+      event.preventDefault();
+      if (elements.suggestions.hidden) {
+        activeSuggestionIndex = suggestions.length - 1;
+        renderSuggestions();
+      } else {
+        setActiveSuggestion(activeSuggestionIndex - 1);
+      }
+    }
+    return;
+  }
+  if (event.key === "Enter" && !elements.suggestions.hidden && activeSuggestionIndex >= 0) {
+    event.preventDefault();
+    selectSuggestion(suggestions[activeSuggestionIndex].id);
+    return;
+  }
+  if (event.key === "Escape" && !elements.suggestions.hidden) {
+    event.preventDefault();
+    hideSuggestions();
+  }
+}
+
 function isDuplicateGuess(movie, title) {
   const normalizedInput = normalizeTitle(title);
   return state.guesses.some((guess) => (
@@ -929,13 +1028,10 @@ function isDuplicateGuess(movie, title) {
 
 function buildGuessPayload() {
   const title = elements.input.value.trim();
-  if (selectedSuggestion && normalizeTitle(selectedSuggestion.title) === normalizeTitle(title)) {
-    return {
-      tmdbId: selectedSuggestion.id,
-      title,
-    };
-  }
-  return { title };
+  return {
+    tmdbId: selectedSuggestion.id,
+    title,
+  };
 }
 
 function applyGuessResult(payload, fallbackAttempt = null) {
@@ -981,6 +1077,10 @@ async function handleSubmit(event) {
   const title = elements.input.value.trim();
   if (!title) {
     setFormMessage(t("invalidEmpty"), "warning");
+    return;
+  }
+  if (!selectedSuggestion || normalizeTitle(selectedSuggestion.title) !== normalizeTitle(title)) {
+    setFormMessage(t("invalidSelection"), "warning");
     return;
   }
   if (isDuplicateGuess(selectedSuggestion, title)) {
@@ -1226,6 +1326,11 @@ function init() {
     }
   });
   elements.input.addEventListener("input", scheduleSearch);
+  elements.input.setAttribute("role", "combobox");
+  elements.input.setAttribute("aria-autocomplete", "list");
+  elements.input.setAttribute("aria-controls", "suggestions");
+  elements.input.setAttribute("aria-expanded", "false");
+  elements.input.addEventListener("keydown", handleSuggestionKeydown);
   elements.input.addEventListener("focus", () => {
     if (suggestions.length) {
       renderSuggestions();
@@ -1239,6 +1344,14 @@ function init() {
     if (button) {
       selectSuggestion(button.dataset.movieId);
     }
+  });
+  elements.suggestions.addEventListener("mouseover", (event) => {
+    const button = event.target.closest(".movly-suggestion");
+    if (!button) {
+      return;
+    }
+    activeSuggestionIndex = Number(button.dataset.suggestionIndex);
+    syncActiveSuggestion({ scroll: false });
   });
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".movly-search-wrap")) {

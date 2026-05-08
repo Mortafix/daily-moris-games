@@ -97,6 +97,65 @@ button {
   background: var(--panel-soft);
 }
 
+.nav-menu {
+  display: none;
+  width: 100%;
+}
+
+.nav-menu-trigger {
+  display: none;
+}
+
+.nav-menu-trigger::marker,
+.nav-menu-trigger::-webkit-details-marker {
+  display: none;
+  content: "";
+}
+
+.nav-current {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-current > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-menu-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border: 1px solid rgba(167, 176, 192, 0.22);
+  border-radius: 999px;
+  background: rgba(167, 176, 192, 0.08);
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.nav-menu-chevron {
+  color: var(--muted);
+  font-size: 0.76rem;
+  transition: transform 160ms ease;
+}
+
+.nav-menu[open] .nav-menu-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-menu-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -707,6 +766,16 @@ h3 {
   opacity: 0.5;
 }
 
+.timely-drop-placeholder {
+  min-height: 74px;
+  border: 2px dashed rgba(245, 200, 75, 0.44);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(245, 200, 75, 0.1), rgba(72, 199, 189, 0.06)),
+    rgba(245, 200, 75, 0.04);
+  pointer-events: none;
+}
+
 .timely-card.is-revealed {
   border-color: rgba(245, 200, 75, 0.34);
 }
@@ -1101,8 +1170,12 @@ h3 {
 }
 
 .movly-suggestion:hover,
+.movly-suggestion.is-active,
 .movly-suggestion:focus-visible {
   border-color: var(--movly);
+  background:
+    linear-gradient(145deg, rgba(72, 199, 189, 0.12), transparent 58%),
+    #111721;
   outline: none;
 }
 
@@ -1886,7 +1959,63 @@ h3 {
   }
 
   .site-nav {
-    overflow-x: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .nav-menu {
+    display: block;
+  }
+
+  .nav-menu-desktop {
+    display: none;
+  }
+
+  .nav-menu-trigger {
+    display: flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 10px;
+    border-radius: 6px;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 900;
+    list-style: none;
+  }
+
+  .nav-menu-trigger:hover,
+  .nav-menu-trigger:focus-visible {
+    background: var(--panel-strong);
+    outline: none;
+  }
+
+  .nav-current {
+    flex: 1;
+  }
+
+  .nav-menu-mobile {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .nav-menu[open] .nav-menu-mobile {
+    display: grid;
+  }
+
+  .nav-menu-mobile .nav-link {
+    min-height: 38px;
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+
+  .nav-menu-mobile .nav-link > i {
+    width: 18px;
+    text-align: center;
   }
 
   .game-card-grid,
@@ -1979,6 +2108,10 @@ h3 {
   .timely-card {
     grid-template-columns: 28px minmax(0, 1fr) auto;
     gap: 8px;
+  }
+
+  .timely-drop-placeholder {
+    min-height: 96px;
   }
 
   .timely-grip {
