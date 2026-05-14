@@ -2193,6 +2193,43 @@ h3 {
     padding: 16px;
   }
 
+  .colory-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .colory-panel .site-nav {
+    order: 1;
+  }
+
+  .colory-panel .topbar {
+    order: 2;
+  }
+
+  .colory-panel .mode-switch {
+    order: 3;
+  }
+
+  .colory-panel .mode-legend {
+    order: 4;
+  }
+
+  .colory-panel .color-stage {
+    order: 5;
+  }
+
+  .colory-panel .color-form {
+    order: 6;
+  }
+
+  .colory-panel .status-strip {
+    order: 7;
+  }
+
+  .colory-panel .color-guess-list {
+    order: 8;
+  }
+
   .topbar {
     align-items: stretch;
     flex-direction: column;
