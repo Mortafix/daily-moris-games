@@ -169,20 +169,20 @@ def get_year_direction_hint(
     if answer_year < guess_year:
         return {
             "yearDirection": "older",
-            "message": "Il film corretto e piu vecchio."
+            "message": "Il film corretto è più vecchio."
             if language == "it"
             else "The correct movie is older.",
         }
     if answer_year > guess_year:
         return {
             "yearDirection": "newer",
-            "message": "Il film corretto e piu recente."
+            "message": "Il film corretto è più recente."
             if language == "it"
             else "The correct movie is newer.",
         }
     return {
         "yearDirection": "same",
-        "message": "Il film corretto e dello stesso anno."
+        "message": "Il film corretto è dello stesso anno."
         if language == "it"
         else "The correct movie is from the same year.",
     }

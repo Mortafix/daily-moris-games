@@ -177,21 +177,63 @@
 
         <form class="color-form" id="colorForm" novalidate>
           <div class="rgb-controls">
-            <label class="rgb-control">
-              <span class="rgb-channel is-red">R</span>
-              <input class="rgb-slider" id="redSlider" type="range" min="0" max="255" value="128" data-channel="r">
-              <input class="rgb-number" id="redInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="r">
-            </label>
-            <label class="rgb-control">
-              <span class="rgb-channel is-green">G</span>
-              <input class="rgb-slider" id="greenSlider" type="range" min="0" max="255" value="128" data-channel="g">
-              <input class="rgb-number" id="greenInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="g">
-            </label>
-            <label class="rgb-control">
-              <span class="rgb-channel is-blue">B</span>
-              <input class="rgb-slider" id="blueSlider" type="range" min="0" max="255" value="128" data-channel="b">
-              <input class="rgb-number" id="blueInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="b">
-            </label>
+            <div class="rgb-control">
+              <label class="rgb-channel is-red" for="redSlider">R</label>
+              <div class="rgb-slider-wrap" data-channel="r">
+                <input class="rgb-slider" id="redSlider" type="range" min="0" max="255" value="128" data-channel="r" aria-describedby="redRange">
+                <span class="rgb-range-values" id="redRange" data-channel="r" aria-live="polite">
+                  <span data-range-min>0</span>
+                  <span data-range-max>255</span>
+                </span>
+              </div>
+              <div class="rgb-number-wrap">
+                <button class="rgb-step-button" type="button" data-channel="r" data-step="-1" aria-label="Decrease R">
+                  <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                </button>
+                <input class="rgb-number" id="redInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="r" aria-label="R">
+                <button class="rgb-step-button" type="button" data-channel="r" data-step="1" aria-label="Increase R">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="rgb-control">
+              <label class="rgb-channel is-green" for="greenSlider">G</label>
+              <div class="rgb-slider-wrap" data-channel="g">
+                <input class="rgb-slider" id="greenSlider" type="range" min="0" max="255" value="128" data-channel="g" aria-describedby="greenRange">
+                <span class="rgb-range-values" id="greenRange" data-channel="g" aria-live="polite">
+                  <span data-range-min>0</span>
+                  <span data-range-max>255</span>
+                </span>
+              </div>
+              <div class="rgb-number-wrap">
+                <button class="rgb-step-button" type="button" data-channel="g" data-step="-1" aria-label="Decrease G">
+                  <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                </button>
+                <input class="rgb-number" id="greenInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="g" aria-label="G">
+                <button class="rgb-step-button" type="button" data-channel="g" data-step="1" aria-label="Increase G">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="rgb-control">
+              <label class="rgb-channel is-blue" for="blueSlider">B</label>
+              <div class="rgb-slider-wrap" data-channel="b">
+                <input class="rgb-slider" id="blueSlider" type="range" min="0" max="255" value="128" data-channel="b" aria-describedby="blueRange">
+                <span class="rgb-range-values" id="blueRange" data-channel="b" aria-live="polite">
+                  <span data-range-min>0</span>
+                  <span data-range-max>255</span>
+                </span>
+              </div>
+              <div class="rgb-number-wrap">
+                <button class="rgb-step-button" type="button" data-channel="b" data-step="-1" aria-label="Decrease B">
+                  <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                </button>
+                <input class="rgb-number" id="blueInput" type="tel" inputmode="numeric" pattern="[0-9]*" min="0" max="255" value="128" data-channel="b" aria-label="B">
+                <button class="rgb-step-button" type="button" data-channel="b" data-step="1" aria-label="Increase B">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
           </div>
 
           <button class="guess-button color-submit" type="submit">

@@ -32,10 +32,12 @@ const dictionaries = {
     playMovly: "Play Movly",
     ready: "To play",
     inProgress: "In progress",
-    completed: "Completed",
+    won: "Won",
+    lost: "Lost",
     readyAria: "{game}: to play",
     inProgressAria: "{game}: in progress",
-    completedAria: "{game}: completed",
+    wonAria: "{game}: won",
+    lostAria: "{game}: lost",
   },
   it: {
     homeTitle: "Daily Games",
@@ -64,10 +66,12 @@ const dictionaries = {
     playMovly: "Gioca a Movly",
     ready: "Da giocare",
     inProgress: "In corso",
-    completed: "Completato",
+    won: "Vinto",
+    lost: "Perso",
     readyAria: "{game}: da giocare",
     inProgressAria: "{game}: in corso",
-    completedAria: "{game}: completato",
+    wonAria: "{game}: vinto",
+    lostAria: "{game}: perso",
   },
 };
 
@@ -82,10 +86,15 @@ const statusConfig = {
     labelKey: "inProgress",
     ariaKey: "inProgressAria",
   },
-  completed: {
+  won: {
     icon: "fa-solid fa-circle-check",
-    labelKey: "completed",
-    ariaKey: "completedAria",
+    labelKey: "won",
+    ariaKey: "wonAria",
+  },
+  lost: {
+    icon: "fa-solid fa-circle-xmark",
+    labelKey: "lost",
+    ariaKey: "lostAria",
   },
 };
 
@@ -161,15 +170,25 @@ function loadTimelyState() {
   }
 }
 
-function getGameStatus(prefix) {
-  const states = ["easy", "hard"].map((mode) => loadDailyState(prefix, mode)).filter(Boolean);
-  if (states.some((state) => state.status === "won" || state.status === "lost")) {
-    return "completed";
+function getStatusSummary(states, isInProgress) {
+  if (states.some((state) => state.status === "won")) {
+    return "won";
   }
-  if (states.some((state) => Array.isArray(state.guesses) && state.guesses.length > 0)) {
+  if (states.some((state) => state.status === "lost")) {
+    return "lost";
+  }
+  if (states.some(isInProgress)) {
     return "inProgress";
   }
   return "ready";
+}
+
+function getGameStatus(prefix) {
+  const states = ["easy", "hard"].map((mode) => loadDailyState(prefix, mode)).filter(Boolean);
+  return getStatusSummary(
+    states,
+    (state) => Array.isArray(state.guesses) && state.guesses.length > 0,
+  );
 }
 
 function getTimelyStatus() {
@@ -177,13 +196,10 @@ function getTimelyStatus() {
   if (!state) {
     return "ready";
   }
-  if (state.status === "won" || state.status === "lost") {
-    return "completed";
-  }
-  if (Array.isArray(state.attempts) && state.attempts.length > 0) {
-    return "inProgress";
-  }
-  return "ready";
+  return getStatusSummary(
+    [state],
+    (dailyState) => Array.isArray(dailyState.attempts) && dailyState.attempts.length > 0,
+  );
 }
 
 function loadMovlyState(pool) {
@@ -197,17 +213,10 @@ function loadMovlyState(pool) {
 
 function getMovlyStatus() {
   const states = ["best", "trending"].map(loadMovlyState).filter(Boolean);
-  const completedCount = states.filter((state) => state.status === "won" || state.status === "lost").length;
-  if (completedCount === 2) {
-    return "completed";
-  }
-  if (
-    completedCount > 0
-    || states.some((state) => Array.isArray(state.guesses) && state.guesses.length > 0)
-  ) {
-    return "inProgress";
-  }
-  return "ready";
+  return getStatusSummary(
+    states,
+    (state) => Array.isArray(state.guesses) && state.guesses.length > 0,
+  );
 }
 
 function renderGameStatus(element, statusKey, gameName) {

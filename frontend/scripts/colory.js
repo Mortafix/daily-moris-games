@@ -29,6 +29,8 @@ const dictionaries = {
     targetColorLabel: "Target color",
     difficultyLabel: "Difficulty",
     languageLabel: "Language",
+    decreaseChannel: "Decrease {channel}",
+    increaseChannel: "Increase {channel}",
     openStats: "Open statistics",
     closeStats: "Close statistics",
     higher: "Higher",
@@ -83,6 +85,8 @@ const dictionaries = {
     targetColorLabel: "Colore da indovinare",
     difficultyLabel: "Difficoltà",
     languageLabel: "Lingua",
+    decreaseChannel: "Diminuisci {channel}",
+    increaseChannel: "Aumenta {channel}",
     openStats: "Apri statistiche",
     closeStats: "Chiudi statistiche",
     higher: "Più alto",
@@ -158,6 +162,8 @@ const elements = {
   guessList: document.querySelector("#guessList"),
   sliders: [...document.querySelectorAll(".rgb-slider")],
   numbers: [...document.querySelectorAll(".rgb-number")],
+  rangeLabels: [...document.querySelectorAll(".rgb-range-values")],
+  stepButtons: [...document.querySelectorAll(".rgb-step-button")],
   submit: document.querySelector(".color-submit"),
   statsPlayed: document.querySelector("#statsPlayed"),
   statsWins: document.querySelector("#statsWins"),
@@ -362,6 +368,144 @@ function parseChannel(value) {
   return Number.isInteger(number) && number >= 0 && number <= 255 ? number : null;
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function createChannelBounds() {
+  return Object.fromEntries(channelNames.map((channel) => [channel, { min: 0, max: 255 }]));
+}
+
+function tightenChannelBounds(bounds, channel, min, max) {
+  const nextMin = clamp(Math.ceil(min), 0, 255);
+  const nextMax = clamp(Math.floor(max), 0, 255);
+  bounds[channel].min = Math.max(bounds[channel].min, nextMin);
+  bounds[channel].max = Math.min(bounds[channel].max, nextMax);
+
+  if (bounds[channel].min > bounds[channel].max) {
+    bounds[channel].min = bounds[channel].max;
+  }
+}
+
+function getChannelBounds() {
+  const bounds = createChannelBounds();
+  const target = targets[activeMode];
+
+  state.guesses.forEach((guess) => {
+    channelNames.forEach((channel) => {
+      const value = guess[channel];
+      const distance = Math.abs(value - target[channel]);
+      const isResolved = activeMode === "easy" ? distance <= EASY_TOLERANCE : distance === 0;
+
+      if (isResolved) {
+        const tolerance = activeMode === "easy" ? EASY_TOLERANCE : 0;
+        tightenChannelBounds(bounds, channel, value - tolerance, value + tolerance);
+        return;
+      }
+
+      if (value < target[channel]) {
+        tightenChannelBounds(bounds, channel, value + 1, 255);
+        return;
+      }
+
+      tightenChannelBounds(bounds, channel, 0, value - 1);
+    });
+  });
+
+  return bounds;
+}
+
+function getCurrentChannelValue(channel) {
+  const numberInput = elements.numbers.find((input) => input.dataset.channel === channel);
+  const sliderInput = elements.sliders.find((input) => input.dataset.channel === channel);
+  return parseChannel(numberInput?.value) ?? parseChannel(sliderInput?.value);
+}
+
+function rangePercent(value) {
+  return `${(clamp(value, 0, 255) / 255) * 100}%`;
+}
+
+function updateRangeLabels(bounds) {
+  elements.rangeLabels.forEach((label) => {
+    const channelBounds = bounds[label.dataset.channel];
+    const minLabel = label.querySelector("[data-range-min]");
+    const maxLabel = label.querySelector("[data-range-max]");
+    minLabel.textContent = String(channelBounds.min);
+    maxLabel.textContent = String(channelBounds.max);
+    label.dataset.range = channelBounds.min === channelBounds.max
+      ? String(channelBounds.min)
+      : `${channelBounds.min}-${channelBounds.max}`;
+    label.style.setProperty("--range-min-pct", rangePercent(channelBounds.min));
+    label.style.setProperty("--range-max-pct", rangePercent(channelBounds.max));
+    label.style.setProperty(
+      "--range-mid-pct",
+      rangePercent((channelBounds.min + channelBounds.max) / 2),
+    );
+    label.classList.toggle("is-full", channelBounds.min === 0 && channelBounds.max === 255);
+    label.classList.toggle("is-min-edge", channelBounds.min === 0);
+    label.classList.toggle("is-max-edge", channelBounds.max === 255);
+    label.classList.toggle("is-fixed", channelBounds.min === channelBounds.max);
+    label.classList.toggle(
+      "is-tight",
+      channelBounds.min !== channelBounds.max && channelBounds.max - channelBounds.min <= 28,
+    );
+  });
+}
+
+function updateSliderRangeVisuals(bounds) {
+  elements.sliders.forEach((input) => {
+    const channelBounds = bounds[input.dataset.channel];
+    const sliderWrap = input.closest(".rgb-slider-wrap");
+    const visualTarget = sliderWrap ?? input;
+    visualTarget.style.setProperty("--allowed-min", rangePercent(channelBounds.min));
+    visualTarget.style.setProperty("--allowed-max", rangePercent(channelBounds.max));
+    input.classList.toggle("is-constrained", channelBounds.min > 0 || channelBounds.max < 255);
+    sliderWrap?.classList.toggle("is-constrained", channelBounds.min > 0 || channelBounds.max < 255);
+  });
+}
+
+function updateStepButtons(bounds = getChannelBounds()) {
+  const isLocked = state.status !== "playing";
+  elements.stepButtons.forEach((button) => {
+    const channel = button.dataset.channel;
+    const step = Number(button.dataset.step) || 0;
+    const value = getCurrentChannelValue(channel) ?? bounds[channel].min;
+    const atMin = step < 0 && value <= bounds[channel].min;
+    const atMax = step > 0 && value >= bounds[channel].max;
+    button.disabled = isLocked || atMin || atMax;
+  });
+}
+
+function applyChannelBounds() {
+  const bounds = getChannelBounds();
+
+  channelNames.forEach((channel) => {
+    const channelBounds = bounds[channel];
+    const currentValue = getCurrentChannelValue(channel) ?? 128;
+    const normalized = clamp(currentValue, channelBounds.min, channelBounds.max);
+
+    elements.sliders
+      .filter((input) => input.dataset.channel === channel)
+      .forEach((input) => {
+        input.min = "0";
+        input.max = "255";
+        input.value = String(normalized);
+      });
+    elements.numbers
+      .filter((input) => input.dataset.channel === channel)
+      .forEach((input) => {
+        input.min = String(channelBounds.min);
+        input.max = String(channelBounds.max);
+        input.value = String(normalized);
+      });
+  });
+
+  updateRangeLabels(bounds);
+  updateSliderRangeVisuals(bounds);
+  updatePreview();
+  updateStepButtons(bounds);
+}
+
 function readCurrentGuess() {
   const guess = {};
   for (const channel of channelNames) {
@@ -483,7 +627,9 @@ function getStatusFeedback() {
 }
 
 function syncControl(channel, value) {
-  const normalized = Math.max(0, Math.min(255, Number(value) || 0));
+  const bounds = getChannelBounds();
+  const channelBounds = bounds[channel];
+  const normalized = clamp(Number(value) || 0, channelBounds.min, channelBounds.max);
   elements.sliders
     .filter((input) => input.dataset.channel === channel)
     .forEach((input) => {
@@ -495,6 +641,7 @@ function syncControl(channel, value) {
       input.value = String(normalized);
     });
   updatePreview();
+  updateStepButtons(bounds);
 }
 
 function updatePreview() {
@@ -580,6 +727,7 @@ function renderGame() {
 
   elements.targetSwatch.style.background = colorToCss(target);
   elements.html.dataset.mode = activeMode;
+  applyChannelBounds();
   renderAttempts();
   renderGuessList();
   renderStats();
@@ -598,6 +746,7 @@ function renderGame() {
   [...elements.sliders, ...elements.numbers].forEach((input) => {
     input.disabled = isLocked;
   });
+  updateStepButtons();
   clearFormMessage();
 }
 
@@ -664,6 +813,10 @@ function localizeStaticText() {
     const isActive = button.dataset.lang === lang;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
+  });
+  elements.stepButtons.forEach((button) => {
+    const labelKey = Number(button.dataset.step) > 0 ? "increaseChannel" : "decreaseChannel";
+    button.setAttribute("aria-label", t(labelKey, { channel: button.dataset.channel.toUpperCase() }));
   });
 }
 
@@ -795,6 +948,7 @@ function initControls() {
       const parsed = parseChannel(input.value);
       if (parsed === null) {
         updatePreview();
+        updateStepButtons();
         return;
       }
       syncControl(input.dataset.channel, parsed);
@@ -802,6 +956,15 @@ function initControls() {
     input.addEventListener("change", () => {
       const parsed = parseChannel(input.value);
       syncControl(input.dataset.channel, parsed === null ? 0 : parsed);
+    });
+  });
+
+  elements.stepButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const channel = button.dataset.channel;
+      const step = Number(button.dataset.step) || 0;
+      const currentValue = getCurrentChannelValue(channel) ?? 0;
+      syncControl(channel, currentValue + step);
     });
   });
 }
