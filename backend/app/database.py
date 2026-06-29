@@ -13,6 +13,7 @@ except ImportError:  # pragma: no cover - older PyMongo async import path.
 
 from .config import get_settings
 from .services.movly import MovlyService
+from .services.quizly import QuizlyService
 
 
 async def ensure_indexes(db) -> None:
@@ -25,6 +26,11 @@ async def ensure_indexes(db) -> None:
         [("tmdbId", ASCENDING)],
         unique=True,
         name="movly_movie_tmdb_unique",
+    )
+    await db.quizly_puzzles.create_index(
+        [("date", ASCENDING), ("mode", ASCENDING)],
+        unique=True,
+        name="quizly_daily_unique",
     )
 
 
@@ -39,6 +45,7 @@ async def lifespan(app: FastAPI):
     app.state.mongo_client = client
     app.state.mongo_db = db
     app.state.movly_service = MovlyService(settings, db)
+    app.state.quizly_service = QuizlyService(settings, db)
 
     try:
         yield

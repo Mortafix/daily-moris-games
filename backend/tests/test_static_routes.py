@@ -23,11 +23,14 @@ def test_pretty_routes_resolve_to_frontend_pages():
     assert relative_static_path("") == "frontend/pages/index.html"
     assert relative_static_path("angly") == "frontend/pages/angly.html"
     assert relative_static_path("movly/") == "frontend/pages/movly.html"
+    assert relative_static_path("quizly") == "frontend/pages/quizly.html"
 
 
 def test_legacy_static_routes_still_work():
     assert relative_static_path("movly.html") == "frontend/pages/movly.html"
     assert relative_static_path("movly.js") == "frontend/scripts/movly.js"
+    assert relative_static_path("quizly.html") == "frontend/pages/quizly.html"
+    assert relative_static_path("quizly.js") == "frontend/scripts/quizly.js"
     assert relative_static_path("styles.css") == "frontend/styles/styles.css"
 
 

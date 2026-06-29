@@ -3,47 +3,44 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Guess the daily movie from progressive emoji hints in Movly.">
+    <meta name="description" content="Answer today's trivia questions in Quizly.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
-    <meta name="apple-mobile-web-app-title" content="Movly">
+    <meta name="apple-mobile-web-app-title" content="Quizly">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Movly">
-    <meta property="og:description" content="Guess the daily movie from emoji.">
+    <meta property="og:title" content="Quizly">
+    <meta property="og:description" content="Answer today's trivia questions.">
     <meta property="og:image" content="/assets/icon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Movly">
-    <meta name="twitter:description" content="Guess the daily movie from emoji.">
+    <meta name="twitter:title" content="Quizly">
+    <meta name="twitter:description" content="Answer today's trivia questions.">
     <meta name="twitter:image" content="/assets/icon.png">
-    <title>Movly</title>
+    <title>Quizly</title>
     <link rel="icon" type="image/png" href="/assets/icon.png">
     <link rel="apple-touch-icon" href="/assets/icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="/styles/styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="game-panel movly-panel" aria-labelledby="app-title">
+      <section class="game-panel quizly-panel" aria-labelledby="app-title">
         <nav class="site-nav" aria-label="Games">
           <a class="nav-link nav-home-link" href="/">
             <i class="fa-solid fa-house" aria-hidden="true"></i>
             <span data-i18n="navHome">Home</span>
           </a>
-          <a class="nav-link nav-current-link is-active" href="/movly">
+          <a class="nav-link nav-current-link is-active" href="/quizly">
             <span class="nav-icon-wrap" aria-hidden="true">
-              <img class="nav-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
-              <i class="fa-solid fa-film"></i>
+              <img class="nav-game-icon" src="/assets/quizly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-circle-question"></i>
             </span>
-            <span data-i18n="navMovly">Movly</span>
+            <span data-i18n="navQuizly">Quizly</span>
           </a>
           <details class="nav-menu">
             <summary class="nav-menu-trigger">
@@ -77,14 +74,14 @@
                 </span>
                 <span data-i18n="navTimely">Timely</span>
               </a>
-              <a class="nav-link is-active" href="/movly">
+              <a class="nav-link" href="/movly">
                 <span class="nav-icon-wrap" aria-hidden="true">
                   <img class="nav-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
                   <i class="fa-solid fa-film"></i>
                 </span>
                 <span data-i18n="navMovly">Movly</span>
               </a>
-              <a class="nav-link" href="/quizly">
+              <a class="nav-link is-active" href="/quizly">
                 <span class="nav-icon-wrap" aria-hidden="true">
                   <img class="nav-game-icon" src="/assets/quizly-icon.png" alt="" onerror="this.hidden = true">
                   <i class="fa-solid fa-circle-question"></i>
@@ -99,10 +96,10 @@
           <div class="title-block">
             <h1 class="game-title" id="app-title">
               <span class="title-icon-wrap" aria-hidden="true">
-                <img class="title-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-film"></i>
+                <img class="title-game-icon" src="/assets/quizly-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-circle-question"></i>
               </span>
-              <span data-i18n="title">Movly</span>
+              <span data-i18n="title">Quizly</span>
             </h1>
           </div>
 
@@ -118,67 +115,68 @@
           </div>
         </header>
 
-        <div class="mode-switch movly-pool-switch" role="tablist" data-i18n-aria="poolLabel" aria-label="Pool">
-          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-pool="best">
-            <i class="fa-solid fa-trophy" aria-hidden="true"></i>
-            <span data-i18n="best">Best</span>
+        <div class="mode-switch" role="tablist" data-i18n-aria="difficultyLabel" aria-label="Difficulty">
+          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-mode="easy">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            <span data-i18n="easy">Easy</span>
           </button>
-          <button class="mode-button" type="button" role="tab" aria-selected="false" data-pool="trending">
-            <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
-            <span data-i18n="trending">Trending</span>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="hard">
+            <i class="fa-solid fa-brain" aria-hidden="true"></i>
+            <span data-i18n="hard">Hard</span>
           </button>
         </div>
 
-        <div class="movly-stage" id="movlyStage" aria-live="polite">
-          <div class="movly-loading" id="movlyLoading">
+        <section class="quizly-stage is-loading" id="quizlyStage" aria-live="polite">
+          <div class="quizly-loading" id="quizlyLoading">
             <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
-            <span data-i18n="loading">Loading today's movie</span>
+            <span data-i18n="loading">Loading today's trivia</span>
           </div>
-          <p class="movly-emoji-line" id="emojiLine" data-i18n-aria="emojiLabel" aria-label="Emoji hint"></p>
-        </div>
 
-        <div class="movly-result" id="resultPanel" hidden>
-          <div class="movly-poster" id="resultPoster" aria-hidden="true">
-            <i class="fa-solid fa-film"></i>
+          <div class="quizly-question-wrap" id="questionWrap" hidden>
+            <div class="quizly-meta-row">
+              <span class="quizly-progress" id="questionProgress">1/5</span>
+              <span class="quizly-category" id="questionCategory"></span>
+              <span class="quizly-difficulty" id="questionDifficulty"></span>
+            </div>
+            <h2 class="quizly-question" id="questionText"></h2>
+            <div class="quizly-answers" id="answerGrid"></div>
           </div>
-          <div class="movly-result-copy">
-            <span class="guess-label" data-i18n="answerLabel">Answer</span>
+
+          <div class="quizly-result-panel" id="resultPanel" hidden>
+            <p class="eyebrow" data-i18n="resultEyebrow">Result</p>
             <h2 id="resultTitle"></h2>
-            <p id="resultYear"></p>
+            <p id="resultCopy"></p>
           </div>
-        </div>
+        </section>
 
         <div class="status-strip" id="statusStrip">
           <div class="status-copy">
-            <i id="statusIcon" class="fa-solid fa-film" aria-hidden="true"></i>
-            <p id="statusText" class="status-text" data-i18n="ready">Guess the movie from emoji.</p>
+            <i id="statusIcon" class="fa-solid fa-circle-question" aria-hidden="true"></i>
+            <p id="statusText" class="status-text" data-i18n="ready">Pick the correct answer.</p>
           </div>
-          <div class="attempt-dots" id="attemptDots" data-i18n-aria="attemptsLabel" aria-label="Attempts"></div>
+          <div class="attempt-dots" id="attemptDots" data-i18n-aria="questionsLabel" aria-label="Questions"></div>
         </div>
 
-        <form class="guess-form movly-form" id="guessForm" novalidate>
-          <label class="guess-label" for="guessInput" data-i18n="guessLabel">Movie</label>
-          <div class="movly-search-wrap">
-            <div class="input-row">
-              <input id="guessInput" class="guess-input" name="guess" type="text" enterkeyhint="done" autocomplete="off" placeholder="Titanic">
-              <button class="guess-button" type="submit">
-                <i class="fa-solid fa-ticket" aria-hidden="true"></i>
-                <span data-i18n="guessButton">Guess</span>
-              </button>
-              <button class="skip-button" id="skipButton" type="button" data-i18n-aria="skipButton" aria-label="Skip">
-                <i class="fa-solid fa-forward-step" aria-hidden="true"></i>
-                <span data-i18n="skipButton">Skip</span>
-              </button>
-            </div>
-            <div class="movly-suggestions" id="suggestions" role="listbox" hidden></div>
-          </div>
-          <p id="formMessage" class="form-message" aria-live="polite">
-            <i id="formMessageIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
-            <span id="formMessageText"></span>
-          </p>
-        </form>
+        <div class="quizly-actions">
+          <button class="skip-button" id="retryButton" type="button" hidden>
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+            <span data-i18n="retryButton">Retry</span>
+          </button>
+          <button class="skip-button" id="prevButton" type="button">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            <span data-i18n="prevButton">Previous</span>
+          </button>
+          <button class="guess-button" id="submitButton" type="button" disabled>
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            <span data-i18n="submitButton">Submit</span>
+          </button>
+          <button class="skip-button" id="nextButton" type="button">
+            <span data-i18n="nextButton">Next</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
 
-        <ol class="movly-guess-list" id="guessList" data-i18n-aria="previousGuesses" aria-label="Previous guesses"></ol>
+        <ol class="quizly-review-list" id="reviewList" data-i18n-aria="reviewLabel" aria-label="Answer review" hidden></ol>
       </section>
     </main>
 
@@ -223,13 +221,13 @@
         </div>
 
         <section class="distribution-section" aria-labelledby="distributionTitle">
-          <h3 id="distributionTitle" data-i18n="distributionTitle">Guesses</h3>
-          <div id="statsDistribution" class="distribution-list"></div>
+          <h3 id="distributionTitle" data-i18n="distributionTitle">Scores</h3>
+          <div class="distribution-list" id="statsDistribution"></div>
           <p id="statsEmpty" class="stats-empty" data-i18n="statsEmpty">Finish a daily puzzle to start tracking stats.</p>
         </section>
       </div>
     </dialog>
 
-    <script src="/scripts/movly.js"></script>
+    <script src="/scripts/quizly.js"></script>
   </body>
 </html>

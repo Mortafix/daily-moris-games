@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, order historical events, and decode movies from emoji.">
+    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, order events, decode movies from emoji, and answer trivia.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="Daily Games">
@@ -14,11 +14,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Daily Games">
-    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, Timely, and Movly.">
+    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, Timely, Movly, and Quizly.">
     <meta property="og:image" content="/assets/icon.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Daily Games">
-    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, Timely, and Movly.">
+    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, Timely, Movly, and Quizly.">
     <meta name="twitter:image" content="/assets/icon.png">
     <title>Daily Games</title>
     <link rel="icon" type="image/png" href="/assets/icon.png">
@@ -31,56 +31,21 @@
     <main class="app-shell home-shell">
       <section class="game-panel home-panel" aria-labelledby="home-title">
         <nav class="site-nav" aria-label="Games">
-          <div class="nav-menu-list nav-menu-desktop">
-            <a class="nav-link is-active" href="/">
-              <i class="fa-solid fa-house" aria-hidden="true"></i>
-              <span data-i18n="navHome">Home</span>
-            </a>
-            <a class="nav-link" href="/angly">
-              <span class="nav-icon-wrap" aria-hidden="true">
-                <img class="nav-game-icon" src="/assets/angly-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-drafting-compass"></i>
-              </span>
-              <span data-i18n="navAngly">Angly</span>
-            </a>
-            <a class="nav-link" href="/colory">
-              <span class="nav-icon-wrap" aria-hidden="true">
-                <img class="nav-game-icon" src="/assets/colory-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-palette"></i>
-              </span>
-              <span data-i18n="navColory">Colory</span>
-            </a>
-            <a class="nav-link" href="/timely">
-              <span class="nav-icon-wrap" aria-hidden="true">
-                <img class="nav-game-icon" src="/assets/timely-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-timeline"></i>
-              </span>
-              <span data-i18n="navTimely">Timely</span>
-            </a>
-            <a class="nav-link" href="/movly">
-              <span class="nav-icon-wrap" aria-hidden="true">
-                <img class="nav-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
-                <i class="fa-solid fa-film"></i>
-              </span>
-              <span data-i18n="navMovly">Movly</span>
-            </a>
-          </div>
+          <a class="nav-link nav-home-link is-active" href="/">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
           <details class="nav-menu">
             <summary class="nav-menu-trigger">
               <span class="nav-current">
                 <span class="nav-icon-wrap" aria-hidden="true">
-                  <i class="fa-solid fa-house"></i>
+                  <i class="fa-solid fa-gamepad"></i>
                 </span>
-                <span data-i18n="navHome">Home</span>
+                <span data-i18n="navMenu">Games</span>
               </span>
-              <span class="nav-menu-label" data-i18n="navMenu">Games</span>
               <i class="fa-solid fa-chevron-down nav-menu-chevron" aria-hidden="true"></i>
             </summary>
-            <div class="nav-menu-list nav-menu-mobile">
-              <a class="nav-link is-active" href="/">
-                <i class="fa-solid fa-house" aria-hidden="true"></i>
-                <span data-i18n="navHome">Home</span>
-              </a>
+            <div class="nav-menu-list nav-menu-dropdown">
               <a class="nav-link" href="/angly">
                 <span class="nav-icon-wrap" aria-hidden="true">
                   <img class="nav-game-icon" src="/assets/angly-icon.png" alt="" onerror="this.hidden = true">
@@ -108,6 +73,13 @@
                   <i class="fa-solid fa-film"></i>
                 </span>
                 <span data-i18n="navMovly">Movly</span>
+              </a>
+              <a class="nav-link" href="/quizly">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/quizly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-circle-question"></i>
+                </span>
+                <span data-i18n="navQuizly">Quizly</span>
               </a>
             </div>
           </details>
@@ -189,6 +161,22 @@
             </div>
             <a class="play-link" href="/movly">
               <span data-i18n="playMovly">Play Movly</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+
+          <article class="game-card is-quizly">
+            <div class="game-card-art" aria-hidden="true">
+              <img class="game-card-png" src="/assets/quizly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+              <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <div class="game-card-copy">
+              <h2 data-i18n="quizlyTitle">Quizly</h2>
+              <p data-i18n="quizlyDescription">Answer daily trivia questions</p>
+              <span class="game-status" id="quizlyStatus"></span>
+            </div>
+            <a class="play-link" href="/quizly">
+              <span data-i18n="playQuizly">Play Quizly</span>
               <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </article>

@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 
 from .api.movly import router as movly_router
+from .api.quizly import router as quizly_router
 from .config import get_settings
 from .database import lifespan
 
@@ -17,6 +18,7 @@ PRETTY_ROUTES = {
     "colory": "pages/colory.html",
     "timely": "pages/timely.html",
     "movly": "pages/movly.html",
+    "quizly": "pages/quizly.html",
 }
 
 LEGACY_ROUTES = {
@@ -25,11 +27,13 @@ LEGACY_ROUTES = {
     "colory.html": "pages/colory.html",
     "timely.html": "pages/timely.html",
     "movly.html": "pages/movly.html",
+    "quizly.html": "pages/quizly.html",
     "home.js": "scripts/home.js",
     "angly.js": "scripts/angly.js",
     "colory.js": "scripts/colory.js",
     "timely.js": "scripts/timely.js",
     "movly.js": "scripts/movly.js",
+    "quizly.js": "scripts/quizly.js",
     "styles.css": "styles/styles.css",
     "site.webmanifest": "site.webmanifest",
 }
@@ -39,6 +43,7 @@ STATIC_PREFIXES = ("assets/", "scripts/", "styles/")
 
 app = FastAPI(title="Daily Moris Games API", lifespan=lifespan)
 app.include_router(movly_router)
+app.include_router(quizly_router)
 
 
 @app.get("/api/health")

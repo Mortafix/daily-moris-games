@@ -8,12 +8,13 @@ Una piccola raccolta di giochi daily da browser, pensata per partite veloci una 
 - **Colory**: ricrea il colore del giorno usando i valori RGB.
 - **Timely**: ordina cinque eventi accaduti oggi nella storia dal più antico al più recente.
 - **Movly**: indovina il film del giorno tramite livelli progressivi di emoji.
+- **Quizly**: rispondi a domande trivia giornaliere a risposta multipla.
 
-Angly, Colory e Timely hanno modalità facile e difficile. Movly ha due pool giornalieri, Best e Trending. I progressi sono salvati localmente e le statistiche giornaliere restano sul dispositivo.
+Angly, Colory, Timely e Quizly hanno modalità facile e difficile. Movly ha due pool giornalieri, Best e Trending. I progressi sono salvati localmente e le statistiche giornaliere restano sul dispositivo.
 
 ## Stack
 
-Il frontend usa HTML, CSS e JavaScript vanilla. Movly usa un backend FastAPI con MongoDB per generare e salvare i film daily condivisi.
+Il frontend usa HTML, CSS e JavaScript vanilla. Movly e Quizly usano un backend FastAPI con MongoDB per generare e salvare i daily condivisi.
 
 ## Struttura
 
@@ -49,9 +50,27 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload --port 8000
 ```
 
-Apri `http://localhost:8000/movly`. Anche gli altri giochi restano disponibili dallo stesso host con URL puliti: `/angly`, `/colory`, `/timely` e `/movly`.
+Apri `http://localhost:8000/movly`. Anche gli altri giochi restano disponibili dallo stesso host con URL puliti: `/angly`, `/colory`, `/timely`, `/movly` e `/quizly`.
 
 Il frontend vive in `frontend/`; se `STATIC_ROOT` non e impostata, FastAPI la risolve automaticamente dalla root del repo. Il vecchio `STATIC_ROOT=..` resta compatibile.
+
+## Reset daily backend
+
+Movly e Quizly salvano il daily condiviso in MongoDB. Per cancellare i puzzle generati della giornata e permettere al backend di rigenerarli alla prossima apertura:
+
+```bash
+python -m backend.app.admin reset-daily
+```
+
+Puoi limitare il reset a una data, gioco, pool o modalità:
+
+```bash
+python -m backend.app.admin reset-daily --date 2026-06-26 --game movly --pool best
+python -m backend.app.admin reset-daily --game quizly --mode hard
+python -m backend.app.admin reset-daily --dry-run
+```
+
+Il reset backend rimuove solo i puzzle condivisi salvati in MongoDB. I progressi e le statistiche del browser restano locali: Quizly interroga comunque il backend a ogni apertura e riparte pulito quando il puzzle rigenerato cambia versione, data, modalita, lingua o domande. Per cancellare manualmente anche il progresso locale di Quizly, rimuovi le chiavi `localStorage` con prefisso `quizly-daily:v2`.
 
 ## API Movly
 
@@ -59,3 +78,7 @@ Il frontend vive in `frontend/`; se `STATIC_ROOT` non e impostata, FastAPI la ri
 - `GET /api/movly/daily?pool=best|trending&lang=it|en`
 - `GET /api/movly/search?q=titanic&lang=it`
 - `POST /api/movly/guess`
+
+## API Quizly
+
+- `GET /api/quizly/daily?mode=easy|hard&lang=it|en`

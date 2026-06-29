@@ -3,6 +3,7 @@ const ANGLY_PREFIX = "angle-daily:v1";
 const COLORY_PREFIX = "colory-daily:v1";
 const TIMELY_PREFIX = "timely-daily:v1";
 const MOVLY_PREFIX = "movly-daily:v1";
+const QUIZLY_PREFIX = "quizly-daily:v2";
 
 const dictionaries = {
   en: {
@@ -13,6 +14,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navQuizly: "Quizly",
     navMenu: "Games",
     dailyDateLabel: "Daily date",
     languageLabel: "Language",
@@ -26,10 +28,13 @@ const dictionaries = {
     timelyDescription: "Order today's historical events",
     movlyTitle: "Movly",
     movlyDescription: "Guess the daily movie from emoji",
+    quizlyTitle: "Quizly",
+    quizlyDescription: "Answer daily trivia questions",
     playAngly: "Play Angly",
     playColory: "Play Colory",
     playTimely: "Play Timely",
     playMovly: "Play Movly",
+    playQuizly: "Play Quizly",
     ready: "To play",
     inProgress: "In progress",
     won: "Won",
@@ -47,6 +52,7 @@ const dictionaries = {
     navColory: "Colory",
     navTimely: "Timely",
     navMovly: "Movly",
+    navQuizly: "Quizly",
     navMenu: "Giochi",
     dailyDateLabel: "Data del daily",
     languageLabel: "Lingua",
@@ -60,10 +66,13 @@ const dictionaries = {
     timelyDescription: "Ordina gli eventi storici di oggi",
     movlyTitle: "Movly",
     movlyDescription: "Indovina il film del giorno dalle emoji",
+    quizlyTitle: "Quizly",
+    quizlyDescription: "Rispondi a domande trivia giornaliere",
     playAngly: "Gioca ad Angly",
     playColory: "Gioca a Colory",
     playTimely: "Gioca a Timely",
     playMovly: "Gioca a Movly",
+    playQuizly: "Gioca a Quizly",
     ready: "Da giocare",
     inProgress: "In corso",
     won: "Vinto",
@@ -106,6 +115,7 @@ const elements = {
   coloryStatus: document.querySelector("#coloryStatus"),
   timelyStatus: document.querySelector("#timelyStatus"),
   movlyStatus: document.querySelector("#movlyStatus"),
+  quizlyStatus: document.querySelector("#quizlyStatus"),
 };
 
 let lang = getInitialLanguage();
@@ -253,6 +263,7 @@ function render() {
   renderGameStatus(elements.coloryStatus, getGameStatus(COLORY_PREFIX), t("coloryTitle"));
   renderGameStatus(elements.timelyStatus, getTimelyStatus(), t("timelyTitle"));
   renderGameStatus(elements.movlyStatus, getMovlyStatus(), t("movlyTitle"));
+  renderGameStatus(elements.quizlyStatus, getGameStatus(QUIZLY_PREFIX), t("quizlyTitle"));
 
   elements.languageButtons.forEach((button) => {
     const isActive = button.dataset.lang === lang;
