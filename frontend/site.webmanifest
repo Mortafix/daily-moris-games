@@ -1,7 +1,7 @@
 {
-  "name": "Daily Games",
-  "short_name": "Daily",
-  "description": "Small daily browser puzzles: Angly, Colory, Timely, Movly, and Quizly.",
+  "name": "Moris Games",
+  "short_name": "Moris Games",
+  "description": "Daily single-player puzzles and party games to play together.",
   "start_url": "/",
   "scope": "./",
   "display": "standalone",

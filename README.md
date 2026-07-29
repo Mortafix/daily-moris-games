@@ -1,8 +1,8 @@
-# Daily Moris Games
+# Moris Games
 
-Una piccola raccolta di giochi daily da browser, pensata per partite veloci una volta al giorno.
+Una raccolta di giochi da browser: sfide daily in singolo e party game da fare in compagnia.
 
-## Giochi
+## Daily games
 
 - **Angly**: indovina i gradi dell'angolo del giorno.
 - **Colory**: ricrea il colore del giorno usando i valori RGB.
@@ -11,6 +11,10 @@ Una piccola raccolta di giochi daily da browser, pensata per partite veloci una 
 - **Quizly**: rispondi a domande trivia giornaliere a risposta multipla.
 
 Angly, Colory, Timely e Quizly hanno modalità facile e difficile. Movly ha due pool giornalieri, Best e Trending. I progressi sono salvati localmente e le statistiche giornaliere restano sul dispositivo.
+
+## Party games
+
+- **Taboo**: fai indovinare una parola alla tua squadra senza usare quelle vietate. Il gioco vive su [taboo.moris.dev](https://taboo.moris.dev).
 
 ## Stack
 

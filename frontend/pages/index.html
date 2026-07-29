@@ -3,24 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Small daily browser puzzles: guess angles, match RGB colors, order events, decode movies from emoji, and answer trivia.">
+    <meta name="description" content="Moris Games: daily single-player puzzles and party games to play together.">
     <meta name="theme-color" content="#0f1117">
     <meta name="color-scheme" content="dark">
-    <meta name="application-name" content="Daily Games">
-    <meta name="apple-mobile-web-app-title" content="Daily Games">
+    <meta name="application-name" content="Moris Games">
+    <meta name="apple-mobile-web-app-title" content="Moris Games">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Daily Games">
-    <meta property="og:description" content="Small daily browser puzzles: Angly, Colory, Timely, Movly, and Quizly.">
+    <meta property="og:title" content="Moris Games">
+    <meta property="og:description" content="Daily single-player puzzles and party games to play together.">
     <meta property="og:image" content="/assets/icon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Daily Games">
-    <meta name="twitter:description" content="Small daily browser puzzles: Angly, Colory, Timely, Movly, and Quizly.">
+    <meta name="twitter:title" content="Moris Games">
+    <meta name="twitter:description" content="Daily single-player puzzles and party games to play together.">
     <meta name="twitter:image" content="/assets/icon.png">
-    <title>Daily Games</title>
+    <title>Moris Games</title>
     <link rel="icon" type="image/png" href="/assets/icon.png">
     <link rel="apple-touch-icon" href="/assets/icon.png">
     <link rel="manifest" href="/site.webmanifest">
@@ -46,6 +46,7 @@
               <i class="fa-solid fa-chevron-down nav-menu-chevron" aria-hidden="true"></i>
             </summary>
             <div class="nav-menu-list nav-menu-dropdown">
+              <span class="nav-menu-section-label" data-i18n="dailySectionTitle">Daily games</span>
               <a class="nav-link" href="/angly">
                 <span class="nav-icon-wrap" aria-hidden="true">
                   <img class="nav-game-icon" src="/assets/angly-icon.png" alt="" onerror="this.hidden = true">
@@ -81,14 +82,23 @@
                 </span>
                 <span data-i18n="navQuizly">Quizly</span>
               </a>
+              <span class="nav-menu-section-label" data-i18n="partySectionTitle">Party games</span>
+              <a class="nav-link" href="https://taboo.moris.dev" target="_blank" rel="noopener noreferrer">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/taboo-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-comments"></i>
+                </span>
+                <span data-i18n="navTaboo">Taboo</span>
+                <i class="fa-solid fa-arrow-up-right-from-square nav-external-icon" aria-hidden="true"></i>
+              </a>
             </div>
           </details>
         </nav>
 
         <header class="home-hero">
           <div class="title-block">
-            <h1 id="home-title" data-i18n="homeTitle">Daily Games</h1>
-            <p class="home-subtitle" data-i18n="homeSubtitle">Small daily puzzles for quick guesses.</p>
+            <h1 id="home-title" data-i18n="homeTitle">Moris Games</h1>
+            <p class="home-subtitle" data-i18n="homeSubtitle">Quick games to play solo or together.</p>
           </div>
 
           <div class="top-actions">
@@ -100,87 +110,132 @@
           </div>
         </header>
 
-        <div class="game-card-grid">
-          <article class="game-card is-angly">
-            <div class="game-card-art" aria-hidden="true">
-              <img class="game-card-png" src="/assets/angly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
-              <i class="fa-solid fa-drafting-compass"></i>
+        <section class="game-collection" aria-labelledby="daily-games-title">
+          <header class="game-collection-header">
+            <span class="game-collection-icon" aria-hidden="true">
+              <i class="fa-regular fa-calendar-check"></i>
+            </span>
+            <div>
+              <h2 id="daily-games-title" data-i18n="dailySectionTitle">Daily games</h2>
+              <p data-i18n="dailySectionDescription">Single-player challenges, new every day.</p>
             </div>
-            <div class="game-card-copy">
-              <h2 data-i18n="anglyTitle">Angly</h2>
-              <p data-i18n="anglyDescription">Guess the daily angle</p>
-              <span class="game-status" id="anglyStatus"></span>
-            </div>
-            <a class="play-link" href="/angly">
-              <span data-i18n="playAngly">Play Angly</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </article>
+          </header>
 
-          <article class="game-card is-colory">
-            <div class="game-card-art" aria-hidden="true">
-              <img class="game-card-png" src="/assets/colory-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
-              <i class="fa-solid fa-palette"></i>
-            </div>
-            <div class="game-card-copy">
-              <h2 data-i18n="coloryTitle">Colory</h2>
-              <p data-i18n="coloryDescription">Match the daily color</p>
-              <span class="game-status" id="coloryStatus"></span>
-            </div>
-            <a class="play-link" href="/colory">
-              <span data-i18n="playColory">Play Colory</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </article>
+          <div class="game-card-grid">
+            <article class="game-card is-angly">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/angly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-drafting-compass"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="anglyTitle">Angly</h3>
+                <p data-i18n="anglyDescription">Guess the daily angle</p>
+                <span class="game-status" id="anglyStatus"></span>
+              </div>
+              <a class="play-link" href="/angly">
+                <span data-i18n="playAngly">Play Angly</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </article>
 
-          <article class="game-card is-timely">
-            <div class="game-card-art" aria-hidden="true">
-              <img class="game-card-png" src="/assets/timely-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
-              <i class="fa-solid fa-timeline"></i>
-            </div>
-            <div class="game-card-copy">
-              <h2 data-i18n="timelyTitle">Timely</h2>
-              <p data-i18n="timelyDescription">Order today's historical events</p>
-              <span class="game-status" id="timelyStatus"></span>
-            </div>
-            <a class="play-link" href="/timely">
-              <span data-i18n="playTimely">Play Timely</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </article>
+            <article class="game-card is-colory">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/colory-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-palette"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="coloryTitle">Colory</h3>
+                <p data-i18n="coloryDescription">Match the daily color</p>
+                <span class="game-status" id="coloryStatus"></span>
+              </div>
+              <a class="play-link" href="/colory">
+                <span data-i18n="playColory">Play Colory</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </article>
 
-          <article class="game-card is-movly">
-            <div class="game-card-art" aria-hidden="true">
-              <img class="game-card-png" src="/assets/movly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
-              <i class="fa-solid fa-film"></i>
-            </div>
-            <div class="game-card-copy">
-              <h2 data-i18n="movlyTitle">Movly</h2>
-              <p data-i18n="movlyDescription">Guess the daily movie from emoji</p>
-              <span class="game-status" id="movlyStatus"></span>
-            </div>
-            <a class="play-link" href="/movly">
-              <span data-i18n="playMovly">Play Movly</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </article>
+            <article class="game-card is-timely">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/timely-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-timeline"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="timelyTitle">Timely</h3>
+                <p data-i18n="timelyDescription">Order today's historical events</p>
+                <span class="game-status" id="timelyStatus"></span>
+              </div>
+              <a class="play-link" href="/timely">
+                <span data-i18n="playTimely">Play Timely</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </article>
 
-          <article class="game-card is-quizly">
-            <div class="game-card-art" aria-hidden="true">
-              <img class="game-card-png" src="/assets/quizly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
-              <i class="fa-solid fa-circle-question"></i>
+            <article class="game-card is-movly">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/movly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-film"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="movlyTitle">Movly</h3>
+                <p data-i18n="movlyDescription">Guess the daily movie from emoji</p>
+                <span class="game-status" id="movlyStatus"></span>
+              </div>
+              <a class="play-link" href="/movly">
+                <span data-i18n="playMovly">Play Movly</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </article>
+
+            <article class="game-card is-quizly">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/quizly-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-circle-question"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="quizlyTitle">Quizly</h3>
+                <p data-i18n="quizlyDescription">Answer daily trivia questions</p>
+                <span class="game-status" id="quizlyStatus"></span>
+              </div>
+              <a class="play-link" href="/quizly">
+                <span data-i18n="playQuizly">Play Quizly</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="game-collection is-party" aria-labelledby="party-games-title">
+          <header class="game-collection-header">
+            <span class="game-collection-icon" aria-hidden="true">
+              <i class="fa-solid fa-people-group"></i>
+            </span>
+            <div>
+              <h2 id="party-games-title" data-i18n="partySectionTitle">Party games</h2>
+              <p data-i18n="partySectionDescription">Games made to share with friends.</p>
             </div>
-            <div class="game-card-copy">
-              <h2 data-i18n="quizlyTitle">Quizly</h2>
-              <p data-i18n="quizlyDescription">Answer daily trivia questions</p>
-              <span class="game-status" id="quizlyStatus"></span>
-            </div>
-            <a class="play-link" href="/quizly">
-              <span data-i18n="playQuizly">Play Quizly</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </article>
-        </div>
+          </header>
+
+          <div class="game-card-grid">
+            <article class="game-card is-taboo">
+              <div class="game-card-art" aria-hidden="true">
+                <img class="game-card-png" src="/assets/taboo-icon.png" alt="" loading="lazy" onerror="this.hidden = true">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <div class="game-card-copy">
+                <h3 data-i18n="tabooTitle">Taboo</h3>
+                <p data-i18n="tabooDescription">Get the word guessed without saying the forbidden ones</p>
+                <span class="game-status is-party" data-i18n-aria="tabooPartyAria" aria-label="Taboo: play together">
+                  <i class="fa-solid fa-users" aria-hidden="true"></i>
+                  <span data-i18n="partyStatus">Play together</span>
+                </span>
+              </div>
+              <a class="play-link" href="https://taboo.moris.dev" target="_blank" rel="noopener noreferrer">
+                <span data-i18n="playTaboo">Play Taboo</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </article>
+          </div>
+        </section>
       </section>
     </main>
 

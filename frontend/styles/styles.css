@@ -19,6 +19,8 @@
   --movly-soft: rgba(72, 199, 189, 0.18);
   --quizly: #79c8ff;
   --quizly-soft: rgba(121, 200, 255, 0.16);
+  --taboo: #d05458;
+  --taboo-soft: rgba(208, 84, 88, 0.16);
   --coral: #ff7a66;
   --gold: #f5c84b;
   --green: #68d391;
@@ -187,6 +189,21 @@ button {
   display: grid;
 }
 
+.nav-menu-section-label {
+  grid-column: 1 / -1;
+  padding: 4px 6px 2px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.nav-menu-section-label:not(:first-child) {
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -218,6 +235,12 @@ button {
 
 .nav-link > i {
   font-size: 0.92rem;
+}
+
+.nav-link .nav-external-icon {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.68rem;
 }
 
 .nav-icon-wrap {
@@ -331,7 +354,7 @@ h3 {
   align-items: flex-end;
   justify-content: space-between;
   gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 26px;
 }
 
 .home-subtitle {
@@ -2362,6 +2385,58 @@ h3 {
   color: var(--timely);
 }
 
+.game-collection {
+  display: grid;
+  gap: 14px;
+}
+
+.game-collection + .game-collection {
+  margin-top: 34px;
+}
+
+.game-collection-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.game-collection-header > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.game-collection-header h2 {
+  font-size: 1.12rem;
+}
+
+.game-collection-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.game-collection-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(72, 199, 189, 0.28);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.game-collection.is-party .game-collection-icon {
+  border-color: rgba(208, 84, 88, 0.34);
+  background: var(--taboo-soft);
+  color: var(--taboo);
+}
+
 .game-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2419,6 +2494,10 @@ h3 {
   gap: 8px;
 }
 
+.game-card-copy h3 {
+  font-size: 1.5rem;
+}
+
 .game-card-copy p {
   margin: 0;
   color: var(--muted);
@@ -2431,6 +2510,17 @@ h3 {
 
 .game-card.is-quizly .game-card-art {
   color: var(--quizly);
+}
+
+.game-card.is-taboo {
+  border-color: rgba(208, 84, 88, 0.38);
+  background:
+    linear-gradient(150deg, rgba(208, 84, 88, 0.14), transparent 48%),
+    var(--panel);
+}
+
+.game-card.is-taboo .game-card-art {
+  color: var(--taboo);
 }
 
 .game-status {
@@ -2462,6 +2552,10 @@ h3 {
 
 .game-status.is-lost i {
   color: var(--coral);
+}
+
+.game-status.is-party i {
+  color: var(--taboo);
 }
 
 .play-link {
