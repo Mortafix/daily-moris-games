@@ -3018,3 +3018,88 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Pooly extends the portal's shared dark game panel and controls. */
+.pooly-panel {
+  --pooly-felt: #165f54;
+  --pooly-cushion: #10493f;
+  --pooly-frame: #283641;
+}
+
+.pooly-scorebar,
+.pooly-shots,
+.pooly-target-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pooly-scorebar {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.pooly-shots i { color: var(--accent); }
+.pooly-shots strong { min-width: 1.5ch; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.pooly-target-label { color: var(--muted); }
+.pooly-color-dot { width: 12px; height: 12px; flex: 0 0 12px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.5); }
+.pooly-stage { display: grid; justify-items: center; padding: 8px 0; }
+.pooly-table { display: block; width: min(100%, 350px); height: auto; aspect-ratio: 380 / 500; border-radius: 18px; touch-action: none; user-select: none; cursor: crosshair; }
+.pooly-table[aria-disabled="true"] { cursor: default; }
+.pooly-table:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.pooly-frame { fill: var(--pooly-frame); stroke: var(--line-strong); stroke-width: 2; }
+.pooly-rail { fill: var(--pooly-cushion); stroke: #397465; stroke-width: 1; }
+.pooly-felt { fill: var(--pooly-felt); stroke: #0c3b34; stroke-width: 2; }
+.pooly-rail-seams { fill: none; stroke: #0b322c; stroke-width: 1; }
+.pooly-diamonds { fill: #8b9c98; opacity: 0.8; }
+.pooly-pocket { fill: #111c20; }
+.pooly-pocket-well { fill: #070d11; }
+.pooly-pocket-jaws { fill: var(--pooly-cushion); stroke: #397465; stroke-width: 1; stroke-linejoin: round; }
+.pooly-guide { stroke: #f5f7fb; stroke-width: 1.5; stroke-dasharray: 4 5; stroke-linecap: round; opacity: 0.8; }
+.pooly-stick { fill: #d9b483; stroke: #a18058; stroke-width: 0.5; }
+.pooly-stick-grip { fill: #563a2b; }
+.pooly-stick-tip { fill: var(--blue); }
+.pooly-ball-shadow { fill: #082c27; opacity: 0.5; }
+.pooly-status { margin-bottom: 16px; min-height: 48px; }
+.pooly-controls { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: 16px 24px; }
+.pooly-controls[hidden] { display: none; }
+.pooly-aim-control, .pooly-power-control { display: grid; gap: 6px; }
+.pooly-aim-buttons { display: flex; align-items: center; gap: 4px; }
+.pooly-aim-buttons .icon-button { width: 44px; height: 44px; }
+.pooly-angle { min-width: 6ch; text-align: center; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.pooly-power-label { display: flex; justify-content: space-between; gap: 12px; }
+.pooly-power-label output { color: var(--accent); font-size: 0.86rem; font-weight: 850; font-variant-numeric: tabular-nums; }
+.pooly-power { --power: 45%; width: 100%; height: 44px; margin: 0; background: transparent; cursor: pointer; appearance: none; -webkit-appearance: none; }
+.pooly-power::-webkit-slider-runnable-track { height: 8px; border-radius: 8px; background: linear-gradient(to right, var(--accent) var(--power), var(--line) var(--power)); }
+.pooly-power::-moz-range-track { height: 8px; border-radius: 8px; background: var(--line); }
+.pooly-power::-moz-range-progress { height: 8px; border-radius: 8px; background: var(--accent); }
+.pooly-power::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -8px; border: 3px solid var(--panel); border-radius: 50%; background: var(--ink); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); appearance: none; -webkit-appearance: none; }
+.pooly-power::-moz-range-thumb { width: 18px; height: 18px; border: 3px solid var(--panel); border-radius: 50%; background: var(--ink); }
+.pooly-power:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.pooly-power:disabled { opacity: 0.4; cursor: default; }
+.pooly-panel button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pooly-panel button:disabled { opacity: 0.45; cursor: default; }
+.pooly-panel button:active:not(:disabled) { transform: translateY(1px); }
+.pooly-shoot { grid-column: 1 / -1; width: 100%; }
+.pooly-storage-note { color: var(--gold); font-size: 0.85rem; line-height: 1.5; }
+.pooly-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.game-card.is-pooly .game-card-art { color: var(--green); }
+
+@media (max-width: 620px) {
+  .pooly-panel .topbar { flex-direction: row; align-items: center; flex-wrap: wrap; }
+  .pooly-panel .game-title { font-size: 2rem; }
+  .pooly-panel .top-actions { gap: 6px; }
+  .pooly-controls { gap: 12px; }
+  .pooly-scorebar { font-size: 0.82rem; }
+  .pooly-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 360px) {
+  .pooly-controls { grid-template-columns: 1fr; }
+  .pooly-aim-control { grid-template-columns: 1fr auto; align-items: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pooly-panel *, .pooly-panel *::before, .pooly-panel *::after { transition: none; }
+}

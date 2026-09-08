@@ -4,6 +4,7 @@ const COLORY_PREFIX = "colory-daily:v1";
 const TIMELY_PREFIX = "timely-daily:v1";
 const MOVLY_PREFIX = "movly-daily:v1";
 const QUIZLY_PREFIX = "quizly-daily:v2";
+const POOLY_PREFIX = "pooly-daily:v1";
 
 const dictionaries = {
   en: {
@@ -15,6 +16,7 @@ const dictionaries = {
     navTimely: "Timely",
     navMovly: "Movly",
     navQuizly: "Quizly",
+    navPooly: "Pooly",
     navTaboo: "Taboo",
     navMenu: "Games",
     dailySectionTitle: "Daily games",
@@ -35,6 +37,8 @@ const dictionaries = {
     movlyDescription: "Guess the daily movie from emoji",
     quizlyTitle: "Quizly",
     quizlyDescription: "Answer daily trivia questions",
+    poolyTitle: "Pooly",
+    poolyDescription: "Pocket the colored ball in as few shots as possible",
     tabooTitle: "Taboo",
     tabooDescription: "Get the word guessed without saying the forbidden ones",
     playAngly: "Play Angly",
@@ -42,6 +46,7 @@ const dictionaries = {
     playTimely: "Play Timely",
     playMovly: "Play Movly",
     playQuizly: "Play Quizly",
+    playPooly: "Play Pooly",
     playTaboo: "Play Taboo",
     partyStatus: "Play together",
     tabooPartyAria: "Taboo: play together",
@@ -63,6 +68,7 @@ const dictionaries = {
     navTimely: "Timely",
     navMovly: "Movly",
     navQuizly: "Quizly",
+    navPooly: "Pooly",
     navTaboo: "Taboo",
     navMenu: "Giochi",
     dailySectionTitle: "Daily games",
@@ -83,6 +89,8 @@ const dictionaries = {
     movlyDescription: "Indovina il film del giorno dalle emoji",
     quizlyTitle: "Quizly",
     quizlyDescription: "Rispondi a domande trivia giornaliere",
+    poolyTitle: "Pooly",
+    poolyDescription: "Imbuca la pallina colorata nel minor numero di tiri",
     tabooTitle: "Taboo",
     tabooDescription: "Fai indovinare la parola senza dire quelle vietate",
     playAngly: "Gioca ad Angly",
@@ -90,6 +98,7 @@ const dictionaries = {
     playTimely: "Gioca a Timely",
     playMovly: "Gioca a Movly",
     playQuizly: "Gioca a Quizly",
+    playPooly: "Gioca a Pooly",
     playTaboo: "Gioca a Taboo",
     partyStatus: "Da giocare insieme",
     tabooPartyAria: "Taboo: da giocare insieme",
@@ -136,10 +145,11 @@ const elements = {
   timelyStatus: document.querySelector("#timelyStatus"),
   movlyStatus: document.querySelector("#movlyStatus"),
   quizlyStatus: document.querySelector("#quizlyStatus"),
+  poolyStatus: document.querySelector("#poolyStatus"),
 };
 
 let lang = getInitialLanguage();
-const todayKey = new Date().toISOString().slice(0, 10);
+let todayKey = new Date().toISOString().slice(0, 10);
 
 function safeGetItem(key) {
   try {
@@ -259,6 +269,21 @@ function renderGameStatus(element, statusKey, gameName) {
   `;
 }
 
+function getPoolyStatus() {
+  try {
+    const state = JSON.parse(safeGetItem(`${POOLY_PREFIX}:${todayKey}`));
+    if (state?.date !== todayKey) {
+      return "ready";
+    }
+    if (state.won === true) {
+      return "won";
+    }
+    return Number.isSafeInteger(state.shots) && state.shots > 0 ? "inProgress" : "ready";
+  } catch (error) {
+    return "ready";
+  }
+}
+
 function setLanguage(nextLanguage) {
   if (!dictionaries[nextLanguage]) {
     return;
@@ -269,6 +294,7 @@ function setLanguage(nextLanguage) {
 }
 
 function render() {
+  todayKey = new Date().toISOString().slice(0, 10);
   elements.html.lang = lang;
   document.title = t("homeTitle");
   document.querySelectorAll("[data-i18n]").forEach((node) => {
@@ -284,6 +310,7 @@ function render() {
   renderGameStatus(elements.timelyStatus, getTimelyStatus(), t("timelyTitle"));
   renderGameStatus(elements.movlyStatus, getMovlyStatus(), t("movlyTitle"));
   renderGameStatus(elements.quizlyStatus, getGameStatus(QUIZLY_PREFIX), t("quizlyTitle"));
+  renderGameStatus(elements.poolyStatus, getPoolyStatus(), t("poolyTitle"));
 
   elements.languageButtons.forEach((button) => {
     const isActive = button.dataset.lang === lang;
@@ -295,5 +322,8 @@ function render() {
 elements.languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
+
+window.addEventListener("pageshow", render);
+window.addEventListener("storage", render);
 
 render();

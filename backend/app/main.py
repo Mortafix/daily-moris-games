@@ -19,6 +19,7 @@ PRETTY_ROUTES = {
     "timely": "pages/timely.html",
     "movly": "pages/movly.html",
     "quizly": "pages/quizly.html",
+    "pooly": "pages/pooly.html",
 }
 
 LEGACY_ROUTES = {
@@ -28,12 +29,14 @@ LEGACY_ROUTES = {
     "timely.html": "pages/timely.html",
     "movly.html": "pages/movly.html",
     "quizly.html": "pages/quizly.html",
+    "pooly.html": "pages/pooly.html",
     "home.js": "scripts/home.js",
     "angly.js": "scripts/angly.js",
     "colory.js": "scripts/colory.js",
     "timely.js": "scripts/timely.js",
     "movly.js": "scripts/movly.js",
     "quizly.js": "scripts/quizly.js",
+    "pooly.js": "scripts/pooly.js",
     "styles.css": "styles/styles.css",
     "site.webmanifest": "site.webmanifest",
 }

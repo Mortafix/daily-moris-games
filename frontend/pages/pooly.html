@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Pot the daily colored ball in as few shots as possible.">
+    <meta name="theme-color" content="#0f1117">
+    <meta name="color-scheme" content="dark">
+    <meta name="application-name" content="Daily Games">
+    <meta name="apple-mobile-web-app-title" content="Pooly">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pooly">
+    <meta property="og:description" content="One pocket, two balls. A new pool challenge every day.">
+    <meta property="og:image" content="/assets/icon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pooly">
+    <meta name="twitter:description" content="One pocket, two balls. A new pool challenge every day.">
+    <meta name="twitter:image" content="/assets/icon.png">
+    <title>Pooly</title>
+    <link rel="icon" type="image/png" href="/assets/icon.png">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/styles/styles.css?v=pooly-2">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-panel pooly-panel" aria-labelledby="app-title">
+        <nav class="site-nav" aria-label="Games">
+          <a class="nav-link nav-home-link" href="/">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
+          <a class="nav-link nav-current-link is-active" href="/pooly">
+            <span class="nav-icon-wrap" aria-hidden="true">
+              <img class="nav-game-icon" src="/assets/pooly-icon.png" alt="" onerror="this.hidden = true">
+              <i class="fa-solid fa-circle-dot"></i>
+            </span>
+            <span data-i18n="navPooly">Pooly</span>
+          </a>
+          <details class="nav-menu">
+            <summary class="nav-menu-trigger">
+              <span class="nav-current">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <i class="fa-solid fa-gamepad"></i>
+                </span>
+                <span data-i18n="navMenu">Games</span>
+              </span>
+              <i class="fa-solid fa-chevron-down nav-menu-chevron" aria-hidden="true"></i>
+            </summary>
+            <div class="nav-menu-list nav-menu-dropdown">
+              <a class="nav-link" href="/angly">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/angly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-drafting-compass"></i>
+                </span>
+                <span data-i18n="navAngly">Angly</span>
+              </a>
+              <a class="nav-link" href="/colory">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/colory-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-palette"></i>
+                </span>
+                <span data-i18n="navColory">Colory</span>
+              </a>
+              <a class="nav-link" href="/timely">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/timely-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-timeline"></i>
+                </span>
+                <span data-i18n="navTimely">Timely</span>
+              </a>
+              <a class="nav-link" href="/movly">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/movly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-film"></i>
+                </span>
+                <span data-i18n="navMovly">Movly</span>
+              </a>
+              <a class="nav-link" href="/quizly">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/quizly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-circle-question"></i>
+                </span>
+                <span data-i18n="navQuizly">Quizly</span>
+              </a>
+              <a class="nav-link is-active" href="/pooly" aria-current="page">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/pooly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-bullseye"></i>
+                </span>
+                <span data-i18n="navPooly">Pooly</span>
+              </a>
+            </div>
+          </details>
+        </nav>
+
+        <header class="topbar">
+          <div class="title-block">
+            <h1 class="game-title" id="app-title">
+              <span class="title-icon-wrap" aria-hidden="true">
+                <img class="title-game-icon" src="/assets/pooly-icon.png" alt="" onerror="this.hidden = true">
+                <i class="fa-solid fa-circle-dot"></i>
+              </span>
+              <span data-i18n="title">Pooly</span>
+            </h1>
+          </div>
+
+          <div class="top-actions">
+            <div class="date-pill" id="dateLabel" data-i18n-aria="dailyDateLabel" aria-label="Daily date"></div>
+            <button class="icon-button" id="statsButton" type="button" data-i18n-aria="openStats" aria-label="Open statistics">
+              <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
+            </button>
+            <div class="language-switch" role="group" data-i18n-aria="languageLabel" aria-label="Language">
+              <button class="language-button" type="button" data-lang="it" data-i18n-aria="italianLanguage" aria-label="Italiano">🇮🇹</button>
+              <button class="language-button" type="button" data-lang="en" data-i18n-aria="englishLanguage" aria-label="English">🇬🇧</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="pooly-scorebar">
+          <span class="pooly-shots"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i> <span data-i18n="shots">Shots</span> <strong id="shotCount">0</strong></span>
+          <span class="pooly-target-label"><span class="pooly-color-dot" id="colorDot" aria-hidden="true"></span><span id="targetLabel"></span></span>
+        </div>
+        <div class="pooly-stage">
+          <svg id="poolTable" class="pooly-table" viewBox="-30 -30 380 500" tabindex="0" role="group" aria-labelledby="tableTitle" aria-describedby="tableDescription">
+            <title id="tableTitle">Daily pool table</title>
+            <desc id="tableDescription">Aim from the white ball toward the colored ball. There is one pocket on the edge. Keyboard on the table: ← → aim, Shift for precision, ↑ ↓ power, Space to shoot.</desc>
+            <defs>
+              <radialGradient id="cueFinish" cx="32%" cy="28%" r="75%"><stop stop-color="#fff"/><stop offset=".65" stop-color="#f5f7fb"/><stop offset="1" stop-color="#a7b0c0"/></radialGradient>
+              <radialGradient id="ballFinish" cx="32%" cy="25%" r="80%"><stop stop-color="#fff" stop-opacity=".68"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
+              <clipPath id="tableClip"><rect x="-29" y="-29" width="378" height="498" rx="18"/></clipPath>
+              <clipPath id="feltClip"><rect width="320" height="440"/></clipPath>
+              <path id="pocketShape" d="M-27-14 Q-27-25-16-25 H16 Q27-25 27-14 L23 0 Q18 14 0 14 Q-18 14-23 0Z"/>
+              <mask id="pocketMask" maskUnits="userSpaceOnUse" x="-30" y="-30" width="380" height="500">
+                <rect x="-30" y="-30" width="380" height="500" fill="white"/>
+                <use id="pocketCutout" href="#pocketShape" fill="black"/>
+              </mask>
+            </defs>
+            <g aria-hidden="true" clip-path="url(#tableClip)">
+              <rect class="pooly-frame" x="-29" y="-29" width="378" height="498" rx="18"/>
+              <g id="pocket">
+                <use class="pooly-pocket" href="#pocketShape"/>
+                <circle class="pooly-pocket-well" cy="-8" r="17"/>
+              </g>
+              <g mask="url(#pocketMask)">
+              <rect class="pooly-rail" x="-13" y="-13" width="346" height="466" rx="7"/>
+              <rect class="pooly-felt" width="320" height="440"/>
+              <path class="pooly-rail-seams" d="M-13 -13 0 0 M333 -13 320 0 M-13 453 0 440 M333 453 320 440"/>
+              <g class="pooly-diamonds"><path d="M80 -24 83 -21 80 -18 77 -21Z M160 -24 163 -21 160 -18 157 -21Z M240 -24 243 -21 240 -18 237 -21Z M80 458 83 461 80 464 77 461Z M160 458 163 461 160 464 157 461Z M240 458 243 461 240 464 237 461Z M-24 110 -21 107 -18 110 -21 113Z M-24 220 -21 217 -18 220 -21 223Z M-24 330 -21 327 -18 330 -21 333Z M338 110 341 107 344 110 341 113Z M338 220 341 217 344 220 341 223Z M338 330 341 327 344 330 341 333Z"/></g>
+              </g>
+              <g id="pocketJaws" class="pooly-pocket-jaws">
+                <path d="M-29-13 H-21 L-17-8-23 0Z M29-13 H21 L17-8 23 0Z"/>
+              </g>
+              <g clip-path="url(#feltClip)"><line id="aimGuide" class="pooly-guide"/></g>
+              <g id="cueStick"><path class="pooly-stick" d="M-145 -3.3 -22 -1.5 -22 1.5 -145 3.3Z"/><path class="pooly-stick-grip" d="M-145 -3.3 -105 -2.7 -105 2.7 -145 3.3Z"/><path class="pooly-stick-tip" d="M-25 -1.6 -21 -1.5 -21 1.5 -25 1.6Z"/></g>
+              <g id="targetBall"><circle class="pooly-ball-shadow" cx="1" cy="3" r="11"/><circle id="targetFill" r="11"/><circle r="11" fill="url(#ballFinish)"/><circle r="4" fill="#fff" fill-opacity=".85"/></g>
+              <g id="cueBall"><circle class="pooly-ball-shadow" cx="1" cy="3" r="11"/><circle r="11" fill="url(#cueFinish)"/><circle cx="-3" cy="-3" r="2" fill="#fff"/></g>
+            </g>
+          </svg>
+        </div>
+        <div class="status-strip pooly-status" id="statusStrip" role="status" aria-live="polite" aria-atomic="true">
+          <div class="status-copy"><i id="statusIcon" class="fa-solid fa-bullseye" aria-hidden="true"></i><p id="statusText" class="status-text"></p></div>
+        </div>
+        <div class="pooly-controls" id="shotControls">
+          <div class="pooly-aim-control">
+            <span class="guess-label" data-i18n="aim">Aim</span>
+            <div class="pooly-aim-buttons">
+              <button class="icon-button" id="aimLeft" type="button" data-i18n-aria="aimLeft" aria-label="Rotate aim counterclockwise"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+              <output id="angleValue" class="pooly-angle">0°</output>
+              <button class="icon-button" id="aimRight" type="button" data-i18n-aria="aimRight" aria-label="Rotate aim clockwise"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="pooly-power-control">
+            <div class="pooly-power-label"><label class="guess-label" for="powerInput" data-i18n="power">Power</label><output id="powerValue" for="powerInput">45%</output></div>
+            <input class="pooly-power" id="powerInput" type="range" min="1" max="100" value="45" step="1">
+          </div>
+          <button class="guess-button pooly-shoot" id="shootButton" type="button"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i><span data-i18n="shoot">Shoot</span></button>
+        </div>
+        <p class="pooly-storage-note" id="storageNote" hidden data-i18n="storageNote">Progress cannot be saved in this browser. Keep this page open to finish your game.</p>
+        <noscript><p>Enable JavaScript to play Pooly. / Attiva JavaScript per giocare a Pooly.</p></noscript>
+      </section>
+    </main>
+    <dialog class="stats-dialog" id="statsDialog" aria-labelledby="statsTitle">
+      <div class="stats-panel">
+        <header class="stats-header"><h2 id="statsTitle" data-i18n="statsTitle">Statistics</h2><button class="icon-button" id="statsCloseButton" type="button" data-i18n-aria="closeStats" aria-label="Close statistics"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></header>
+        <div class="stats-grid pooly-stats-grid">
+          <div class="stat-tile"><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i><span id="statsCompleted" class="stat-value">0</span><span class="stat-label" data-i18n="statsCompleted">Completed</span></div>
+          <div class="stat-tile"><i class="fa-solid fa-medal" aria-hidden="true"></i><span id="statsBest" class="stat-value">—</span><span class="stat-label" data-i18n="statsBest">Best shots</span></div>
+          <div class="stat-tile"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i><span id="statsAverage" class="stat-value">—</span><span class="stat-label" data-i18n="statsAverage">Average shots</span></div>
+          <div class="stat-tile"><i class="fa-solid fa-fire" aria-hidden="true"></i><span id="statsStreak" class="stat-value">0</span><span class="stat-label" data-i18n="statsStreak">Streak</span></div>
+        </div>
+        <p class="stats-empty" id="statsEmpty" data-i18n="statsEmpty">Complete a daily table to start tracking your local stats.</p>
+      </div>
+    </dialog>
+    <script src="/scripts/pooly-engine.js?v=pooly-2"></script>
+    <script src="/scripts/pooly.js?v=pooly-2"></script>
+  </body>
+</html>

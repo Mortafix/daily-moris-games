@@ -9,8 +9,11 @@ Una raccolta di giochi da browser: sfide daily in singolo e party game da fare i
 - **Timely**: ordina cinque eventi accaduti oggi nella storia dal più antico al più recente.
 - **Movly**: indovina il film del giorno tramite livelli progressivi di emoji.
 - **Quizly**: rispondi a domande trivia giornaliere a risposta multipla.
+- **Pooly**: manda in buca la pallina colorata con la bianca nel minor numero di tiri possibile, senza un limite di colpi.
 
 Angly, Colory, Timely e Quizly hanno modalità facile e difficile. Movly ha due pool giornalieri, Best e Trending. I progressi sono salvati localmente e le statistiche giornaliere restano sul dispositivo.
+
+Pooly propone ogni giorno un tavolo condiviso, con una sola buca in una posizione casuale del perimetro e due palline. Posizioni e colore cambiano alla mezzanotte UTC; il progresso si salva nel browser con la chiave `pooly-daily:v1:YYYY-MM-DD`.
 
 ## Party games
 
@@ -54,7 +57,7 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload --port 8000
 ```
 
-Apri `http://localhost:8000/movly`. Anche gli altri giochi restano disponibili dallo stesso host con URL puliti: `/angly`, `/colory`, `/timely`, `/movly` e `/quizly`.
+Apri `http://localhost:8000/movly`. Anche gli altri giochi restano disponibili dallo stesso host con URL puliti: `/angly`, `/colory`, `/timely`, `/movly`, `/quizly` e `/pooly`.
 
 Il frontend vive in `frontend/`; se `STATIC_ROOT` non e impostata, FastAPI la risolve automaticamente dalla root del repo. Il vecchio `STATIC_ROOT=..` resta compatibile.
 
@@ -86,3 +89,16 @@ Il reset backend rimuove solo i puzzle condivisi salvati in MongoDB. I progressi
 ## API Quizly
 
 - `GET /api/quizly/daily?mode=easy|hard&lang=it|en`
+
+## Pooly
+
+Pooly genera lo stesso tavolo per tutti dalla data UTC: una sola buca lungo l’intero perimetro, una bianca e una pallina colorata. Mira toccando o trascinando sul tavolo, regola la potenza e premi Tira; i pulsanti di rotazione rifiniscono la direzione. Il tavolo supporta anche le frecce e Spazio.
+
+Non ci sono limiti di tiri. La bianca in buca ricompare e aggiunge un colpo di penalità; imbucare la colorata conclude la partita, anche se nello stesso tiro entra la bianca (la penalità conta). Progressi, tiri in movimento e risultati sono salvati sul dispositivo. Il daily cambia a mezzanotte UTC.
+
+Verifica motore e controller, senza dipendenze npm:
+
+```bash
+node --test frontend/tests/*.test.cjs
+python -m pytest backend/tests -q
+```

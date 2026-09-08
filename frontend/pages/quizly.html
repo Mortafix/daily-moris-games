@@ -25,7 +25,7 @@
     <link rel="apple-touch-icon" href="/assets/icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/styles.css?v=pooly-1">
   </head>
   <body>
     <main class="app-shell">
@@ -87,6 +87,13 @@
                   <i class="fa-solid fa-circle-question"></i>
                 </span>
                 <span data-i18n="navQuizly">Quizly</span>
+              </a>
+              <a class="nav-link" href="/pooly">
+                <span class="nav-icon-wrap" aria-hidden="true">
+                  <img class="nav-game-icon" src="/assets/pooly-icon.png" alt="" onerror="this.hidden = true">
+                  <i class="fa-solid fa-bullseye"></i>
+                </span>
+                <span data-i18n="navPooly">Pooly</span>
               </a>
             </div>
           </details>
@@ -228,6 +235,6 @@
       </div>
     </dialog>
 
-    <script src="/scripts/quizly.js"></script>
+    <script src="/scripts/quizly.js?v=pooly-1"></script>
   </body>
 </html>
